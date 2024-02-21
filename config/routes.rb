@@ -8,4 +8,9 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root to: "pages#home"
+
+  root to: "players#index"
+
+  get "players/:id", to: "players#show", as: :player
+
 end

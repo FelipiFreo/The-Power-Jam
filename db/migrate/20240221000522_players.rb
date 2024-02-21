@@ -1,8 +1,15 @@
-# frozen_string_literal: true
-
-class DeviseCreatePlayers < ActiveRecord::Migration[7.1]
+class Players < ActiveRecord::Migration[7.1]
   def change
+
     create_table :players do |t|
+      # Campos de jogadora / Player fields
+      t.string      :calling_name
+      t.string      :family_name
+      t.string      :derby_name
+      t.string      :derby_number
+      t.string      :league
+
+
       ## Database authenticatable
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""

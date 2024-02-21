@@ -1,0 +1,7 @@
+
+<ul>
+  <% @players.each do |player| %>
+    <li><%= link_to player.calling_name, player_path(player) %></li>
+  <% end %>
+
+</ul>
