@@ -50,3 +50,35 @@ puts "Criando 8 novas jogadoras"
 end
 
 puts "Seed concluído com sucesso!"
+
+
+# Criação e penalties
+
+puts ""
+puts ""
+puts "Criando penalties"
+puts ""
+
+# Limpa os registros existentes
+Penalty.destroy_all
+
+# Arrays com dados dos penalties
+
+  names          = ["Back Block", "High Block", "Low Block", "Head Block", "Forearm", "Leg Block", "Illegal Contact", "Direction", "Multiplayer", "Illegal Position", "Cut", "Interference", "Illegal Procedure", "Misconduct"]
+  penalty_codes  = ["B", "A", "L", "H", "F", "E", "C", "D", "M", "P", "X", "N", "I", "G"]
+  descriptions   = ["Impact to an illegal target zone", "Impact to an illegal target zone", "Impact to an illegal target zone", "Impact with an illegal blocking zone", "Impact with an illegal blocking zone", "Impact with an illegal blocking zone", "Other illegal contact", "Other illegal contact", "Multiplayer blocks", "Illegal positioning", "Gaining position", "Interfering ith the flow of the game", "Other illegal procedures, including Star Pass violation and Star Pass interference", "Penalties for unsporting conduct, including Insubordination"]
+  hand_signals   = []
+
+  # Criação de Penalties
+
+  puts "Criando penalties"
+
+names.size.times do |i|
+  Penalty.create!(
+    name: names[i],
+    penalty_code: penalty_codes[i],
+    description: descriptions[i]
+  )
+end
+
+  puts "Penalties criados com sucesso"
