@@ -10,3 +10,54 @@
 .navbar-lewagon .navbar-brand img {
   width: 40px;
 }
+
+.fixed-nav {
+  position: fixed;
+  top: 0;
+  margin-bottom: 90px;
+  width: 100%;
+  z-index: 1000;
+}
+
+.form {
+  /* margin-top: 20px; */ // Espaçamento entre o botão Sign Up e o formulário de login
+  display: inline-block; // Permite que o formulário não ocupe toda a largura
+
+  input[type="submit"] {
+    text-decoration: underline;
+    background-color: #007bff; // Cor de fundo do botão
+    color: #fff; // Cor do texto
+    padding: 10px 20px; // Espaçamento interno
+    border: none; // Sem borda
+    border-radius: 5px; // Cantos arredondados
+    cursor: pointer; // Cursor de mouse ao passar por cima
+  }
+
+  input[type="submit"]:hover {
+    background-color: #0056b3; // Cor de fundo do botão ao passar o mouse por cima
+  }
+}
+
+.btn-helper {
+  background-color: #007bff; // Cor de fundo do botão
+  color: #fff; // Cor do texto
+  padding: 10px 20px; // Espaçamento interno
+  border: none; // Sem borda
+  border-radius: 5px; // Cantos arredondados
+  cursor: pointer; // Cursor de mouse ao passar por cima
+}
+
+.btn-helper:hover {
+  background-color: #0056b3; // Cor de fundo do botão ao passar o mouse por cima
+}
+
+.menu {
+  display: flex; // Usando flexbox
+  justify-content: space-around; // Distribui o espaço ao redor dos elementos
+  /* margin-top: 20px; / */
+}
+
+.menu .btn-helper {
+  flex: 1; // Permite que os botões ocupem a mesma largura
+  margin: 0 10px; // Margem entre os botões
+}
