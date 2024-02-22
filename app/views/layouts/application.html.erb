@@ -5,17 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
+   <%#  <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
     <%= render "shared/flashes" %>
-    
-    <%= render "shared/navbar" %>
-
-    <%= yield %>
+    <div class="fixed-nav">
+      <%= render "shared/navbar" %>
+    </div>
+    <div class="body-nav">
+      <%= yield %>
+    </div>
   </body>
 </html>

@@ -1,6 +1,6 @@
-<div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
+<div class="navbar navbar-expand-sm navbar-light navbar-lewagon fixed-nav">
   <div class="container-fluid">
-    <%= link_to "#", class: "navbar-brand" do %>
+    <%= link_to root_path, class: "navbar-brand" do %>
       <%= image_tag "https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/logo.png" %>
     <% end %>
 
@@ -9,30 +9,44 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto">
         <% if player_signed_in? %>
-          <li class="nav-item active">
-            <%= link_to "Home", "#", class: "nav-link" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "Messages", "#", class: "nav-link" %>
-          </li>
-          <li class="nav-item dropdown">
+          <%# <li class="nav-item active"> %>
+           <%#  <%= link_to "Home", "#", class: "nav-link" %>
+          <%# </li> %>
+          <%# <li class="nav-item"> %>
+           <%#  <%= link_to "Messages", "#", class: "nav-link" %>
+         <%#  </li> %>
+         <%#  <li> %>
+            <%# <%= link_to "Logout", logout_path, method: :delete, data: { confirm: "Tem certeza que deseja sair?" } %>
+         <%#
+       <%#      <%= link_to "Login", new_player_session_path, class: "btn btn-primary" %>
+            <div class="menu">
+              <%= link_to "Edit", edit_player_registration_path(current_player), class: "btn-helper" %>
+              <%= form_tag(logout_path, method: :delete, class: "form") do %>
+                <%= submit_tag "Logout" %>
+              <% end %>
+            </div>
+          <%# <li class="nav-item dropdown">
           <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar", alt: "dropdown menu" %>
-          </a>
+         <%#  </a>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
               <%= link_to "Action", "#", class: "dropdown-item" %>
-              <%= link_to "Another action", "#", class: "dropdown-item" %>
-              <%= link_to "Log out", destroy_player_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
-            </div>
-          </li>
+              <%# <%= link_to "Another action", "#", class: "dropdown-item" %>
+             <%#  <%= link_to "Log out", destroy_player_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
+            <%# /div> %>
+         <%# </li> %>
         <% else %>
-          <li class="nav-item">
-            <%= link_to "Login", new_player_session_path, class: "nav-link" %>
-          </li>
+          <div class="menu">
+            <%= link_to "Sign Up", new_player_registration_path, class: "btn-helper" %>
+            <%= form_tag(login_path, method: :post, class: "form") do %>
+              <%= submit_tag "Login" %>
+            <% end %>
+          </div>
+          <%# <li class="nav-item"> %>
+           <%#  <%= link_to "Login", new_player_session_path, class: "nav-link" %>
+          <%# </li> %>
         <% end %>
-      </ul>
     </div>
   </div>
 </div>
