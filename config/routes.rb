@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
-  devise_for :players
+  devise_for :players, controllers: { registrations: 'registrations' }
+
+  patch "players", to: "registrations#update"
 
   devise_scope :player do
     delete "logout", to: "devise/sessions#destroy", as: :logout

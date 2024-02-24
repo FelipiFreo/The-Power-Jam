@@ -1,6 +1,7 @@
 <h2>Edit Player</h2>
-
-<%= simple_form_for(@player) do |f| %>
+  <%= simple_form_for(@player, url: players_url, method: :patch) do |f| %>
+  <%# <%= simple_form_for(@player, url: player_path, method: :patch) do |f| %>
+  <%# <%= simple_form_for(@player) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
