@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_24_235204) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_25_002927) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,6 +50,19 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_24_235204) do
     t.string "hand_signal"
   end
 
+  create_table "player_in_the_leagues", force: :cascade do |t|
+    t.bigint "player_id", null: false
+    t.bigint "league_id", null: false
+    t.date "start_date"
+    t.date "exit_date"
+    t.string "derby_name"
+    t.string "derby_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["league_id"], name: "index_player_in_the_leagues_on_league_id"
+    t.index ["player_id"], name: "index_player_in_the_leagues_on_player_id"
+  end
+
   create_table "players", force: :cascade do |t|
     t.string "calling_name"
     t.string "family_name"
@@ -68,4 +81,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_24_235204) do
 
   add_foreign_key "league_in_the_games", "games"
   add_foreign_key "league_in_the_games", "leagues"
+  add_foreign_key "player_in_the_leagues", "leagues"
+  add_foreign_key "player_in_the_leagues", "players"
 end
