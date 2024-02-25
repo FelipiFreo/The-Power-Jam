@@ -9,4 +9,6 @@ class LineUp < ApplicationRecord
   belongs_to :blocker1_b
   belongs_to :blocker2_b
   belongs_to :blocker3_b
+
+  has_many :jams
 end
