@@ -75,7 +75,7 @@ Penalty.destroy_all
 
 names.size.times do |i|
   Penalty.create!(
-    name: names[i],
+    penalty_name: names[i],
     penalty_code: penalty_codes[i],
     description: descriptions[i]
   )
