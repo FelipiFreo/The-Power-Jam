@@ -7,7 +7,6 @@ class CreatePlayers < ActiveRecord::Migration[7.1]
       t.string      :family_name
       t.string      :derby_name
       t.string      :derby_number
-      t.string      :league
 
 
       ## Database authenticatable
