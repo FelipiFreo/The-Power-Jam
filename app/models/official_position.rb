@@ -1,0 +1,2 @@
+class OfficialPosition < ApplicationRecord
+end
