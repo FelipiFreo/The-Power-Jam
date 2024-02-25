@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_25_004822) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_25_011323) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -99,6 +99,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_25_004822) do
     t.index ["player_id"], name: "index_players_in_the_leagues_on_player_id"
   end
 
+  create_table "roosters", force: :cascade do |t|
+    t.bigint "game_id", null: false
+    t.string "team_name"
+    t.integer "team_score"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_roosters_on_game_id"
+  end
+
   add_foreign_key "leagues_in_the_games", "games"
   add_foreign_key "leagues_in_the_games", "leagues"
   add_foreign_key "officials_in_the_games", "games"
@@ -106,4 +115,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_25_004822) do
   add_foreign_key "officials_in_the_games", "players"
   add_foreign_key "players_in_the_leagues", "leagues"
   add_foreign_key "players_in_the_leagues", "players"
+  add_foreign_key "roosters", "games"
 end
