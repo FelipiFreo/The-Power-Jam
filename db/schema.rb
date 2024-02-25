@@ -119,7 +119,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_25_031516) do
   end
 
   create_table "penalties", force: :cascade do |t|
-    t.string "name"
+    t.string "penalty_name"
     t.string "penalty_code"
     t.string "description"
     t.string "hand_signal"
