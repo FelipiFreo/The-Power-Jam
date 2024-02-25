@@ -24,15 +24,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_25_004822) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "league_in_the_games", force: :cascade do |t|
-    t.bigint "league_id", null: false
-    t.bigint "game_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["game_id"], name: "index_league_in_the_games_on_game_id"
-    t.index ["league_id"], name: "index_league_in_the_games_on_league_id"
-  end
-
   create_table "leagues", force: :cascade do |t|
     t.string "league_name"
     t.date "foundation"
@@ -41,6 +32,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_25_004822) do
     t.string "instagram"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "leagues_in_the_games", force: :cascade do |t|
+    t.bigint "league_id", null: false
+    t.bigint "game_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_leagues_in_the_games_on_game_id"
+    t.index ["league_id"], name: "index_leagues_in_the_games_on_league_id"
   end
 
   create_table "official_positions", force: :cascade do |t|
@@ -70,19 +70,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_25_004822) do
     t.string "hand_signal"
   end
 
-  create_table "player_in_the_leagues", force: :cascade do |t|
-    t.bigint "player_id", null: false
-    t.bigint "league_id", null: false
-    t.date "start_date"
-    t.date "exit_date"
-    t.string "derby_name"
-    t.string "derby_number"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["league_id"], name: "index_player_in_the_leagues_on_league_id"
-    t.index ["player_id"], name: "index_player_in_the_leagues_on_player_id"
-  end
-
   create_table "players", force: :cascade do |t|
     t.string "calling_name"
     t.string "family_name"
@@ -99,11 +86,24 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_25_004822) do
     t.index ["reset_password_token"], name: "index_players_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "league_in_the_games", "games"
-  add_foreign_key "league_in_the_games", "leagues"
+  create_table "players_in_the_leagues", force: :cascade do |t|
+    t.bigint "player_id", null: false
+    t.bigint "league_id", null: false
+    t.date "start_date"
+    t.date "exit_date"
+    t.string "derby_name"
+    t.string "derby_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["league_id"], name: "index_players_in_the_leagues_on_league_id"
+    t.index ["player_id"], name: "index_players_in_the_leagues_on_player_id"
+  end
+
+  add_foreign_key "leagues_in_the_games", "games"
+  add_foreign_key "leagues_in_the_games", "leagues"
   add_foreign_key "officials_in_the_games", "games"
   add_foreign_key "officials_in_the_games", "official_positions"
   add_foreign_key "officials_in_the_games", "players"
-  add_foreign_key "player_in_the_leagues", "leagues"
-  add_foreign_key "player_in_the_leagues", "players"
+  add_foreign_key "players_in_the_leagues", "leagues"
+  add_foreign_key "players_in_the_leagues", "players"
 end

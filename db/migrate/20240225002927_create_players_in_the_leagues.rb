@@ -1,6 +1,6 @@
-class CreatePlayerInTheLeagues < ActiveRecord::Migration[7.1]
+class CreatePlayersInTheLeagues < ActiveRecord::Migration[7.1]
   def change
-    create_table :player_in_the_leagues do |t|
+    create_table :players_in_the_leagues do |t|
       t.references :player, null: false, foreign_key: true
       t.references :league, null: false, foreign_key: true
       t.date :start_date
