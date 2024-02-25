@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_25_031516) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_25_033259) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -125,6 +125,19 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_25_031516) do
     t.string "hand_signal"
   end
 
+  create_table "penalty_trackings", force: :cascade do |t|
+    t.bigint "jam_id", null: false
+    t.bigint "game_id", null: false
+    t.bigint "player_id", null: false
+    t.bigint "penalty_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_penalty_trackings_on_game_id"
+    t.index ["jam_id"], name: "index_penalty_trackings_on_jam_id"
+    t.index ["penalty_id"], name: "index_penalty_trackings_on_penalty_id"
+    t.index ["player_id"], name: "index_penalty_trackings_on_player_id"
+  end
+
   create_table "players", force: :cascade do |t|
     t.string "calling_name"
     t.string "family_name"
@@ -190,6 +203,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_25_031516) do
   add_foreign_key "officials_in_the_games", "games"
   add_foreign_key "officials_in_the_games", "official_positions"
   add_foreign_key "officials_in_the_games", "players"
+  add_foreign_key "penalty_trackings", "games"
+  add_foreign_key "penalty_trackings", "jams"
+  add_foreign_key "penalty_trackings", "penalties"
+  add_foreign_key "penalty_trackings", "players"
   add_foreign_key "players_in_the_leagues", "leagues"
   add_foreign_key "players_in_the_leagues", "players"
   add_foreign_key "players_in_the_roosters", "players"
