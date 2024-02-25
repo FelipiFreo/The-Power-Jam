@@ -1,0 +1,2 @@
+class JamFinishedBy < ApplicationRecord
+end
