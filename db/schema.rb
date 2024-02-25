@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_25_002927) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_25_004822) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -41,6 +41,26 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_25_002927) do
     t.string "instagram"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "official_positions", force: :cascade do |t|
+    t.string "official_position"
+    t.string "official_position_code"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "officials_in_the_games", force: :cascade do |t|
+    t.bigint "game_id", null: false
+    t.bigint "official_position_id", null: false
+    t.bigint "player_id", null: false
+    t.boolean "is_shadowing"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_officials_in_the_games_on_game_id"
+    t.index ["official_position_id"], name: "index_officials_in_the_games_on_official_position_id"
+    t.index ["player_id"], name: "index_officials_in_the_games_on_player_id"
   end
 
   create_table "penalties", force: :cascade do |t|
@@ -81,6 +101,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_25_002927) do
 
   add_foreign_key "league_in_the_games", "games"
   add_foreign_key "league_in_the_games", "leagues"
+  add_foreign_key "officials_in_the_games", "games"
+  add_foreign_key "officials_in_the_games", "official_positions"
+  add_foreign_key "officials_in_the_games", "players"
   add_foreign_key "player_in_the_leagues", "leagues"
   add_foreign_key "player_in_the_leagues", "players"
 end
