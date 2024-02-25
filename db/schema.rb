@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_25_011323) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_25_013557) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -99,6 +99,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_25_011323) do
     t.index ["player_id"], name: "index_players_in_the_leagues_on_player_id"
   end
 
+  create_table "players_in_the_roosters", force: :cascade do |t|
+    t.bigint "rooster_id", null: false
+    t.bigint "player_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["player_id"], name: "index_players_in_the_roosters_on_player_id"
+    t.index ["rooster_id"], name: "index_players_in_the_roosters_on_rooster_id"
+  end
+
   create_table "roosters", force: :cascade do |t|
     t.bigint "game_id", null: false
     t.string "team_name"
@@ -115,5 +124,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_25_011323) do
   add_foreign_key "officials_in_the_games", "players"
   add_foreign_key "players_in_the_leagues", "leagues"
   add_foreign_key "players_in_the_leagues", "players"
+  add_foreign_key "players_in_the_roosters", "players"
+  add_foreign_key "players_in_the_roosters", "roosters"
   add_foreign_key "roosters", "games"
 end

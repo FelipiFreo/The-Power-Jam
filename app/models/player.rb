@@ -5,5 +5,6 @@ class Player < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :players_in_the_leagues
+  has_many :players_in_the_roosters
   has_many :officials_in_the_games
 end
