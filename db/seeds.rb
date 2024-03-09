@@ -7,6 +7,48 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+##### Seeds bem feitos estão aqui
+
+  #### Game admin (Pétreos)
+    # Officials Positions
+    # Penalties
+    # Jam Finished By
+
+
+
+  #### Player Profile (Fixos)
+    # Players
+    # Leagues
+    # Players in the Leagues
+
+
+
+  #### Game (aleatórios)
+    # Game
+    # Leagues in the Game
+    # Officials in the Game
+    # Rooster
+    # Players int he rooster
+    # Line Up
+    # Jam
+    # Penalty Tracking
+
+
+
+##### Fim dos seeds revisados
+
+
+
+
+
+
+
+
+
+
+
+
 puts "Destruindo todos os registros de Ligas"
 
 # Limpa os registros existentes
