@@ -97,20 +97,24 @@ def seed_officials_positions
 
     ]
 
-    # Criação
-    puts "  - Criando #{positions.size} novas Posições de Oficiais".colorize(:green)
 
-    positions.size.times do |i|
 
-      OfficialPosition.create!(
-        official_position: positions[i][:official_position],
-        official_position_code: positions[i][:official_position_code],
-        description: positions[i][:description]
-    )
-    end
+  # Criação
+  puts "  - Criando #{positions.size} novas Posições de Oficiais".colorize(:green)
 
-    # Finalização do bloco
-    puts "  - Seeds de Posições de Oficiais criados com sucesso!".colorize(:yellow)
-    puts "\n"
+  positions.size.times do |i|
+
+    OfficialPosition.create!(
+      official_position: positions[i][:official_position],
+      official_position_code: positions[i][:official_position_code],
+      description: positions[i][:description]
+  )
+  end
+
+
+
+  # Finalização do bloco
+  puts "  - Seeds de Posições de Oficiais criados com sucesso!".colorize(:yellow)
+  puts "\n"
 
   end

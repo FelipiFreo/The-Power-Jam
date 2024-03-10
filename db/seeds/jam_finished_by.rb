@@ -26,18 +26,22 @@ def seed_jam_finished_by
       }
     ]
 
-    # Criação
-    puts "  - Criando #{finishing_options.size} novas opções de Fim de Jam".colorize(:green)
 
-    finishing_options.size.times do |i|
 
-      JamFinishedBy.create!(
-        finished_by: finishing_options[i][:finished_by]
-      )
-    end
+  # Criação
+  puts "  - Criando #{finishing_options.size} novas opções de Fim de Jam".colorize(:green)
+
+  finishing_options.size.times do |i|
+
+    JamFinishedBy.create!(
+      finished_by: finishing_options[i][:finished_by]
+    )
+  end
+
+
 
     # Finalização do bloco
-    puts "  - Seeds de opções de Fim de Jam criados com sucesso!".colorize(:yellow)
-    puts "\n"
+  puts "  - Seeds de opções de Fim de Jam criados com sucesso!".colorize(:yellow)
+  puts "\n"
 
   end
