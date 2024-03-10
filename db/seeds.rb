@@ -91,7 +91,7 @@ seed_jogadora
 
 seed_officials_positions
 seed_penalties
-# seed_jam_finished_by
+seed_jam_finished_by
 # seed_players
 # seed_leagues
 # seed_players_in_the_leagues
