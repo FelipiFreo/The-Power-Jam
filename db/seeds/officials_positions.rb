@@ -1,7 +1,7 @@
 def seed_officials_positions
 
   # Nome do Modelo
-  puts "  Posições dos Oficiais".colorize(:light_yellow)
+  puts "  Posições de Oficiais".colorize(:light_yellow)
 
 
 
@@ -14,7 +14,7 @@ def seed_officials_positions
   # Dados
   puts "  - Preparando dados para criação de novos registros".colorize(:green)
 
-      # Arrays com nomes, números e ligas fictícias
+    # Arrays de Hashes de Posições de Oficiais
     positions = [
       { official_position: "Head Referee",
         official_position_code: "HR",
@@ -98,7 +98,7 @@ def seed_officials_positions
     ]
 
     # Criação
-    puts "  - Criando #{positions.size} novas posições de oficiais".colorize(:green)
+    puts "  - Criando #{positions.size} novas Posições de Oficiais".colorize(:green)
 
     positions.size.times do |i|
 
@@ -110,7 +110,7 @@ def seed_officials_positions
     end
 
     # Finalização do bloco
-    puts "  - Seeds de posições de oficiais criados com sucesso!".colorize(:yellow)
+    puts "  - Seeds de Posições de Oficiais criados com sucesso!".colorize(:yellow)
     puts "\n"
 
   end
