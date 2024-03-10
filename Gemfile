@@ -1,3 +1,4 @@
+
 source "https://rubygems.org"
 
 ruby "3.1.2"
@@ -51,6 +52,8 @@ gem "simple_form", github: "heartcombo/simple_form"
 gem "sassc-rails"
 
 gem "devise"
+
+gem 'colorize', '~> 0.8.1'
 
 gem 'hirb'
 
