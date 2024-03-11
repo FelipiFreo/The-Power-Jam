@@ -14,7 +14,7 @@ def seed_leagues
   # Dados
   puts "  - Preparando dados para criação de novos registros".colorize(:green)
 
-    # Arrays de Hashes de opções de Fim de Jam
+    # Arrays de Hashes de opções de Ligas
     leagues = [
       { league_name: "Primal Stone Skaters", foundation: Date.new(2010, 5, 15), country: "Australia", city: "Sydney", instagram: "@PrimalStoneSkaters" },
       { league_name: "Pirates Derby Crew", foundation: Date.new(2008, 11, 3), country: "Jamaica", city: "Port Royal", instagram: "@PiratesHavocDerbyCrew" },
