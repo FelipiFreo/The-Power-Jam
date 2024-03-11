@@ -1,4 +1,4 @@
-def seed_jogadora
+def seed_players
 
 # Nome do Modelo
 puts "  Jogadoras".colorize(:light_yellow)

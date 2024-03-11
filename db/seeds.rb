@@ -78,7 +78,7 @@ puts "  - Este seed criará registros fictícios de jogos, jogadoras e ligas e
     puts "    - Penalty Tracking".colorize(:light_cyan)
     puts "\n\n\n"
 
- #### Seção  Apresentação do Seed [ok]
+  #### Seção  Apresentação do Seed [ok]
 
 
 
@@ -87,13 +87,11 @@ puts "  CRIAÇÃO DE SEEDS".colorize(:light_yellow)
 puts "\n\n"
 
 
-seed_jogadora
-
 seed_officials_positions
 seed_penalties
 seed_jam_finished_by
-# seed_players
-# seed_leagues
+seed_players
+seed_leagues
 # seed_players_in_the_leagues
 # seed_game
 # seed_leagues_in_the_game
