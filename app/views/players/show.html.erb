@@ -1,5 +1,3 @@
-<h2><%= @player.calling_name %></h2>
-<h2><%= @player.family_name %> </h2>
-<h2><%= @player.derby_name %></h2>
-<h2><%= @player.derby_number %> </h2>
-<h2><%= @player.league %> </h2>
+<h2><%= @player.calling_name %> <%= @player.family_name %></h2>
+<h2><%= @player.derby_name %> #<%= @player.derby_number %> </h2>
+<h2>Liga <%= @player.players_in_the_leagues.last.league.league_name %> </h2>
