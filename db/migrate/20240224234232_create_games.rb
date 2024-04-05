@@ -6,6 +6,7 @@ class CreateGames < ActiveRecord::Migration[7.1]
       t.time :game_time
       t.string :game_location_nickname
       t.string :game_map_address
+      t.boolean :game_is_over
 
       t.timestamps
     end

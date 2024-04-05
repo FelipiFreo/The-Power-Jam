@@ -20,6 +20,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_25_033259) do
     t.time "game_time"
     t.string "game_location_nickname"
     t.string "game_map_address"
+    t.boolean "game_is_over"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
