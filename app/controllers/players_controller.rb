@@ -1,7 +1,6 @@
 class PlayersController < ApplicationController
 
   def home
-    @player
   end
 
   def index
