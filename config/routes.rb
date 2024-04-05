@@ -11,9 +11,12 @@ Rails.application.routes.draw do
   end
 
   get "players/:id", to: "players#show", as: :player
-  root to: "players#index"
-end
+  # get "games"
+  root to: "players#home"
+  # get "leagues", to: "leagues#index"
+  get "games", to: "games#menu"
 
+end
 
 
 
