@@ -35,7 +35,7 @@ def seed_players_in_the_leagues
 
 
     # Finalização do bloco
-  puts "  - Seeds de opções de Fim de Jam criados com sucesso!".colorize(:yellow)
+  puts "  - Seeds de Jogadoras nas Ligas criados com sucesso!".colorize(:yellow)
   puts "\n"
 
   end

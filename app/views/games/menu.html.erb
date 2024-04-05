@@ -1,2 +1,45 @@
 <h1>Games#Menu</h1>
 <p>Find me in app/views/games/menu.html.erb</p>
+
+<ol>
+  <li><%= link_to "Criar novo jogo", games_new_game_path %></li>
+
+  <hr>
+
+  <li>
+    Lista de jogos em aberto
+    <ul>
+      <% @open_games.each do |game| %>
+        <li>
+          <%= "ID: #{game.id}, Status: #{game.game_is_over ? 'Concluído' : 'Em andamento'}" %>
+        </li>
+      <% end %>
+    </ul>
+  </li>
+
+  <hr>
+
+  <li>
+    Lista de old games
+    <ul>
+      <% @old_games.each do |game| %>
+        <li>
+          <%= "ID: #{game.id}, Status: #{game.game_is_over ? 'Concluído' : 'Em andamento'}" %>
+        </li>
+      <% end %>
+    </ul>
+  </li>
+
+  <hr>
+
+  <li>
+    Lista de todos games (só pra teste)
+    <ul>
+      <% @games.each do |game| %>
+        <li>
+          <%= "ID: #{game.id}, Status: #{game.game_is_over ? 'Concluído' : 'Em andamento'}" %>
+        </li>
+      <% end %>
+    </ul>
+  </li>
+</ol>

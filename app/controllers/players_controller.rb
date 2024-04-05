@@ -1,5 +1,7 @@
 class PlayersController < ApplicationController
 
+  before_action :require_login, only: :home
+
   def home
   end
 
@@ -21,5 +23,18 @@ class PlayersController < ApplicationController
     # sign_out(current_player)
     # redirect_to root_path, status: :see_other
   # end
+
+  private
+
+  def require_login
+    unless logged_in?
+      flash[:error] = "Você precisa estar logada"
+      redirect_to new_player_session_path
+    end
+  end
+
+  def logged_in?
+    player_signed_in?
+  end
 
 end
