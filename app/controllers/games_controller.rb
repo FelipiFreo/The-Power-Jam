@@ -18,6 +18,12 @@ class GamesController < ApplicationController
     render :new_game
   end
 
+  def rooster
+    # @rooster = Player_in_the_rooster.new
+  end
 
+  def add_player_in_the_rooster
+    # clicar e adcionar
+  end
 
 end

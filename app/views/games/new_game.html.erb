@@ -1,4 +1,25 @@
-new games aqui
+Id deste jogo <%= @new_game.id %>
 
-<%= @new_game.id %>
-<%= @new_game.game_is_over %>
+<hr>
+
+<h4>Criar form com:</h4>
+
+<p>Data do Jogos</p>
+<p>Hora do Jogo</p>
+<p>Local do jogo (campo ligado so google maps?)</p>
+
+<hr>
+
+<h4>Criar botões:</h4>
+
+<p><%= link_to "Criar Rooster do Time A", games_rooster_path %></p>
+<p><%= link_to "Criar Rooster do Time B", games_rooster_path %></p>
+
+<p><%= link_to "Escalar Ref Team", games_ref_team_path %></p>
+
+
+<hr>
+
+<p>Salvar jogo</p>
+
+  <li><%= link_to "Menu de Jogos", games_path %></li>

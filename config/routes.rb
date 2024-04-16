@@ -19,8 +19,8 @@ Rails.application.routes.draw do
   # get "leagues", to: "leagues#index"
   get "games", to: "games#menu"
   get "games/new_game", to: "games#new_game"
-
-
+  get "games/rooster", to: "games#rooster"
+  get "games/ref_team", to: "games#ref_team"
 
 end
 
