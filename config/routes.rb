@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   end
 
   get "players/:id", to: "players#show", as: :player
-  get "player/index", to: "players#index"
+  get "players", to: "players#index"
 
 
   # get "games"
@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   get "games/new_game", to: "games#new_game"
   get "games/rooster", to: "games#rooster"
   get "games/ref_team", to: "games#ref_team"
+  get "games/show/:id", to: "games#show"
 
 end
 
