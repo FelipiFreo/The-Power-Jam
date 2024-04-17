@@ -17,6 +17,8 @@ class GamesController < ApplicationController
     end
     render :new_game
 
+    # apagar essa linha
+
     # @new_game.game_date
     # @new_game.game_time
     # @new_game.game_location_nickname
