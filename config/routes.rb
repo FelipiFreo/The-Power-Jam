@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   get "games/new_game", to: "games#new_game"
   get "games/rooster", to: "games#rooster"
   get "games/ref_team", to: "games#ref_team"
+  get "games/show", to: "games#show"
 
 end
 
