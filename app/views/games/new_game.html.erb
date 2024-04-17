@@ -4,9 +4,22 @@ Id deste jogo <%= @new_game.id %>
 
 <h4>Criar form com:</h4>
 
-<p>Data do Jogos</p>
-<p>Hora do Jogo</p>
-<p>Local do jogo (campo ligado so google maps?)</p>
+<%= form_with(model: @new_game, url: create_game_path, method: :post) do |form| %>
+  <p>Data do Jogo: <%= form.date_field :game_date %></p>
+  <p>Hora do Jogo: <%= form.time_field :game_time %> </p>
+  <p>Nome do local do Jogo: <%= form.text_field :game_location_nickname %> </p>
+  <p>Local do jogo (campo ligado so google maps?) <%= form.text_field :game_map_address %> </p>
+
+
+  <%= form.submit "Salvar jogo" %>
+<% end %>
+
+
+
+
+
+
+
 
 <hr>
 
@@ -20,6 +33,6 @@ Id deste jogo <%= @new_game.id %>
 
 <hr>
 
-<p><%= link_to "Salvar jogo", games_show_path %></p>
+<p><%= link_to "Salvar jogo", create_game_path %></p>
 
   <li><%= link_to "Menu de Jogos", games_path %></li>
