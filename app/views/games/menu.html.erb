@@ -11,7 +11,7 @@
     <ul>
       <% @open_games.each do |game| %>
         <li>
-          <%= "ID: #{game.id}, Status: #{game.game_is_over ? 'Concluído' : 'Em andamento'}" %>
+          <%= link_to "ID: #{game.id}, Status: #{game.game_is_over ? 'Concluído' : 'Em andamento'}", game_path(game) %>
         </li>
       <% end %>
     </ul>
@@ -37,7 +37,9 @@
     <ul>
       <% @games.each do |game| %>
         <li>
-          <%= "ID: #{game.id}, Status: #{game.game_is_over ? 'Concluído' : 'Em andamento'}" %>
+          <%# <%= "ID: #{game.id}, Status: #{game.game_is_over ? 'Concluído' : 'Em andamento'}" %>
+          <%= "ID: #{game.id}, Status: #{game.game_is_over}" %>
+
         </li>
       <% end %>
     </ul>

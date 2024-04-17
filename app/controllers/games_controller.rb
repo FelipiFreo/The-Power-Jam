@@ -7,31 +7,32 @@ class GamesController < ApplicationController
 
   end
 
+  def show
+    @game_show = Game.find(params[:id])
+  end
 
   def new_game
-    @new_game = Game.new(game_is_over: false)
+    @new_game = Game.new
+  end
+
+  def create_game
+    @new_game = Game.new(game_params)
+    @game_creator = current_player
+
     if @new_game.save
       flash.now[:notice] = "Novo jogo criado com sucesso!"
+      redirect_to game_path(@new_game)
     else
       flash.now[:alert] = "Não foi possível criar um novo jogo."
+      render :new_game
     end
-    render :new_game
-
-    # apagar essa linha
+  end
 
     # @new_game.game_date
     # @new_game.game_time
     # @new_game.game_location_nickname
     # @new_game.game_map_address
 
-    # t.string :game_name
-    # t.date :game_date
-    # t.time :game_time
-    # t.string :game_location_nickname
-    # t.string :game_map_address
-    # t.boolean :game_is_over
-
-  end
 
   def rooster
     # @rooster = Player_in_the_rooster.new
@@ -39,6 +40,12 @@ class GamesController < ApplicationController
 
   def add_player_in_the_rooster
     # clicar e adcionar
+  end
+
+  private
+
+  def game_params
+    params.require(:game).permit(:game_date, :game_time, :game_location_nickname, :game_map_address, :game_is_over)
   end
 
 end
