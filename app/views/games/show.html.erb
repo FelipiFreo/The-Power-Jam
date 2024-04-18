@@ -4,3 +4,11 @@ show
 <p>
 <%= "ID: #{@game_show.id}, Status: #{@game_show.game_is_over ? 'Concluído' : 'Em andamento'}" %>
 </p>
+<ul>
+  <li><%= "Data: #{@game_show.game_date}" %></li>
+  <li><%= "Horário: #{@game_show.game_time}" %></li>
+  <li><%= "Local: #{@game_show.game_location_nickname}" %></li>
+  <li><%= "Endereço: #{@game_show.game_map_address}" %></li>
+  <li><%= "Concluído: #{@game_show.game_is_over}" %></li>
+
+</ul>
