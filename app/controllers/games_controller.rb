@@ -33,6 +33,11 @@ class GamesController < ApplicationController
     # @new_game.game_location_nickname
     # @new_game.game_map_address
 
+  def ref_team
+    @game_show = Game.find(params[:id])
+    # @ref_team = Officials_in_the_game.new(officials_in_the_game_params)
+  end
+
 
   def rooster
     # @rooster = Player_in_the_rooster.new
@@ -46,6 +51,10 @@ class GamesController < ApplicationController
 
   def game_params
     params.require(:game).permit(:game_date, :game_time, :game_location_nickname, :game_map_address, :game_is_over)
+  end
+
+  def officials_in_the_game_params
+    params.require(:officials_in_the_game).permit(:game, :official_position, :player, :is_shadowing)
   end
 
 end
