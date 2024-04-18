@@ -12,3 +12,15 @@ show
   <li><%= "Concluído: #{@game_show.game_is_over}" %></li>
 
 </ul>
+
+<hr>
+
+<h4>Criar botões:</h4>
+
+<p><%= link_to "Criar Rooster do Time A", games_rooster_path %></p>
+<p><%= link_to "Criar Rooster do Time B", games_rooster_path %></p>
+
+<p><%= link_to "Escalar Ref Team", games_ref_team_path(game_id: @game_show.id) %></p>
+
+
+<hr>

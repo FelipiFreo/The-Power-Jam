@@ -29,5 +29,8 @@ module ThePowerJam
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # criando sessão para armazenar dados do new_game
+    config.session_store :cookie_store, key: '_new_game_session'
   end
 end
