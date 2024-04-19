@@ -34,8 +34,11 @@ class GamesController < ApplicationController
     # @new_game.game_map_address
 
   def ref_team
-    @game_show = Game.find(params[:id])
+    @game_show = Game.find(params[:game_id])
     # @ref_team = Officials_in_the_game.new(officials_in_the_game_params)
+    rescue ActiveRecord::RecordNotFound
+      flash[:alert] = "Jogo não encontrado"
+      redirect_to games_path
   end
 
 
