@@ -4,7 +4,6 @@ class GamesController < ApplicationController
     @old_games = Game.where(game_is_over: true)
     @open_games = Game.where(game_is_over: false)
     @games = Game.all
-
   end
 
   def show
@@ -35,12 +34,20 @@ class GamesController < ApplicationController
 
   def ref_team
     @game_show = Game.find(params[:game_id])
-    # @ref_team = Officials_in_the_game.new(officials_in_the_game_params)
+    @official_position = OfficialPosition.all
+    @ref_team = OfficialsInTheGame.new(officials_in_the_game_params)
+    
+    if @ref_team.save
+      flash.now[:notice] = "Equipe de arbitragem criada com sucesso!"
+      redirect_to game_path(@game_show)
+    else
+      flash.now[:alert] = "Não foi possível criar a equipe de arbitragem."
+      render :ref_team
+    end
     rescue ActiveRecord::RecordNotFound
       flash[:alert] = "Jogo não encontrado"
       redirect_to games_path
   end
-
 
   def rooster
     # @rooster = Player_in_the_rooster.new
@@ -57,7 +64,7 @@ class GamesController < ApplicationController
   end
 
   def officials_in_the_game_params
-    params.require(:officials_in_the_game).permit(:game, :official_position, :player, :is_shadowing)
+    params.require(:officials_in_the_game).permit(:game_id, :official_position_id, :player_id, :is_shadowing)
   end
 
 end
