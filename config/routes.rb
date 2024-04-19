@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   get "games/ref_team", to: "games#ref_team"
   get "games/:id", to: "games#show", as: :game
   post "games/create_game", to: "games#create_game", as: "create_game"
+  post "games/create_ref_team", to: "games#create_ref_team", as: "create_ref_team"
 
 end
 
