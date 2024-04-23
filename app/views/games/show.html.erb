@@ -1,4 +1,4 @@
-show
+show.html.erb
 
 <%= @game_show.id%>
 <p>
@@ -20,7 +20,17 @@ show
 <p><%= link_to "Criar Rooster do Time A", games_rooster_path %></p>
 <p><%= link_to "Criar Rooster do Time B", games_rooster_path %></p>
 
-<p><%= link_to "Escalar Ref Team", games_ref_team_path(game_id: @game_show.id) %></p>
+<p><%= link_to "Escalar Ref Team", games_officials_in_the_game_path(game_id: @game_show.id) %></p>
 
 
 <hr>
+
+
+    Refs escalados
+    <ul>
+      <% @game_show.officials_in_the_games.each do |official| %>
+        <li>Jogadora: <%= official.id %> - <%= official.player.calling_name %></li>
+        <li>Tipo de ref: <%= official.official_position.official_position_code %> - <%= official.official_position.official_position %></li>
+        <hr>
+      <% end %>
+    </ul>

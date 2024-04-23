@@ -1,12 +1,35 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>ThePowerJam</title>
+    <title>Space Jammer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+
+
+
+    <%# Tudo esse código é pra fazer funcionar o Simple Form For %>
+
+    <!-- Adicione as folhas de estilo do jQuery UI -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <!-- Adicione o jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Adicione o jQuery UI -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+    $(document).ready(function() {
+      $('.datepicker').datepicker();
+    });
+    </script>
+
+    <%# até aqui %>
+
   </head>
+
 
   <body>
    <%#  <p class="notice"><%= notice %></p>

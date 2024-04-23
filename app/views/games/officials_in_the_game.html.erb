@@ -1,0 +1,35 @@
+officials_in_the_game.html.erb
+
+
+<% @official_position.each do |position| %>
+  <%= simple_form_for @officials_in_the_game, url: create_officials_in_the_game_path, method: :post do |f| %>
+    <p>ID: <%= @game_show.id %>, Status: <%= @game_show.game_is_over ? 'Concluído' : 'Em andamento' %></p>
+    <%= f.input :player_id, collection: Player.all.map { |player| [player.calling_name, player.id] }, label: "#{position.official_position_code} Escolher Jogadora:", prompt: "Selecione uma jogadora" %>
+    <%= f.hidden_field :game_id, value: @game_show.id %>
+    <%= f.hidden_field :official_position_id, value: position.id %>
+    <%= f.hidden_field :is_shadowing, value: false %>
+    <%= f.button :submit, "Salvar" %>
+  <% end %>
+  <hr>
+<% end %>
+
+#################################
+
+  <%= form_with(model: @officials_in_the_game, url: create_officials_in_the_game_path, method: :post) do |form| %>
+
+    <p>Player Id              <%= form.text_field :player_id %></p>
+    <p>game ID                <%= form.hidden_field :game_id %></p>
+    <p>Official position id   <%= form.hidden_field :official_position_id  %></p>
+    <p>is shadowing           <%= form.check_box :is_shadowing %></p>
+
+    <%= form.submit "Salvar jogadora como Ref" %>
+  <% end %>
+
+  <%= form_with(model: @officials_in_the_game, url: create_officials_in_the_game_path, method: :post) do |form| %>
+    <p>Player ID: <%= form.collection_select :player_id, Player.all, :id, :calling_name %></p>
+    <p>Game ID: <%= form.hidden_field :game_id %></p>
+    <p>Official Position ID: <%= form.hidden_field :official_position_id %></p>
+    <p>Is Shadowing: <%= form.check_box :is_shadowing %></p>
+
+    <%= form.submit "Salvar jogadora como Ref" %>
+  <% end %>
