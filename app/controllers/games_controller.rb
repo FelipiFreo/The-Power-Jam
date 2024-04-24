@@ -32,6 +32,10 @@ class GamesController < ApplicationController
     end
   end
 
+
+
+
+
 #####################################
 
   def officials_in_the_game

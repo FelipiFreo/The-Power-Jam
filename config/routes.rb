@@ -10,19 +10,23 @@ Rails.application.routes.draw do
   # Games routes
 
   get "games", to: "games#menu"
-  get "games/:id", to: "games#show", as: :game
-
 
   get "games/new_game", to: "games#new_game"
   post "games/create_game", to: "games#create_game", as: "create_game"
 
+  get "games/:id", to: "games#show", as: :game
+
+
+
+
+  # Officials in the Games routes
+
   get "games/officials_in_the_game/:game_id", to: "games#officials_in_the_game", as: :games_officials_in_the_game
-  post "games/create_officials_in_the_game", to: "games#create_officials_in_the_game", as: "create_officials_in_the_game"
+  post "games/create_officials_in_the_game", to: "games#create_officials_in_the_game", as: :create_officials_in_the_game
 
 
-  # get "games/officials_in_the_game/", to: "games#officials_in_the_game"
 
-
+  # Rooster routes
 
   get "games/rooster", to: "games#rooster"
 
