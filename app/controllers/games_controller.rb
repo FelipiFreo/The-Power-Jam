@@ -8,7 +8,12 @@ class GamesController < ApplicationController
 
   def show
     @game_show = Game.find(params[:id])
+    # @officials_in_the_game = OfficialsInTheGame.find()
+
+
   end
+
+####################################
 
   def new_game
     @new_game = Game.new
@@ -27,27 +32,38 @@ class GamesController < ApplicationController
     end
   end
 
-    # @new_game.game_date
-    # @new_game.game_time
-    # @new_game.game_location_nickname
-    # @new_game.game_map_address
 
-  def ref_team
+
+
+
+#####################################
+
+  def officials_in_the_game
     @game_show = Game.find(params[:game_id])
     @official_position = OfficialPosition.all
-    @ref_team = OfficialsInTheGame.new(officials_in_the_game_params)
-    
-    if @ref_team.save
+    @officials_in_the_game = OfficialsInTheGame.new(game_id: @game_show.id)
+    # @officials_in_the_game = OfficialsInTheGame.new(officials_in_the_game_params)
+  end
+
+  def create_officials_in_the_game
+      @officials_in_the_game = OfficialsInTheGame.new(officials_in_the_game_params)
+
+    if @officials_in_the_game.save
       flash.now[:notice] = "Equipe de arbitragem criada com sucesso!"
-      redirect_to game_path(@game_show)
+      redirect_to game_path(@officials_in_the_game.game_id)
     else
       flash.now[:alert] = "Não foi possível criar a equipe de arbitragem."
-      render :ref_team
+      render :officials_in_the_game
     end
-    rescue ActiveRecord::RecordNotFound
-      flash[:alert] = "Jogo não encontrado"
-      redirect_to games_path
+
+
+
+
+
+
   end
+
+############################################
 
   def rooster
     # @rooster = Player_in_the_rooster.new

@@ -1,3 +1,5 @@
+new_game.html.erb
+
 Id deste jogo <%= @new_game.id %>
 
 <hr>
@@ -14,13 +16,16 @@ Id deste jogo <%= @new_game.id %>
   <%= form.submit "Salvar jogo" %>
 <% end %>
 
+<hr>
 
+<%= simple_form_for @new_game, url: create_game_path, method: :post do |form| %>
+  <%= form.input :game_date, as: :string, input_html: { class: 'datepicker' }, label: "Data do Jogo" %>
+  <%= form.input :game_time, as: :time, label: "Hora do Jogo" %>
+  <%= form.input :game_location_nickname, label: "Nome do local do Jogo" %>
+  <%= form.input :game_map_address, label: "Local do jogo (campo ligado ao Google Maps?)" %>
 
-
-
-
-
-
+  <%= form.button :submit, "Salvar jogo" %>
+<% end %>
 
 <hr>
 

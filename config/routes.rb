@@ -1,28 +1,48 @@
 Rails.application.routes.draw do
 
+  # Players routes
+
+  root to: "players#home"
+  get "players", to: "players#index"
+  get "players/:id", to: "players#show", as: :player
+
+
+  # Games routes
+
+  get "games", to: "games#menu"
+
+  get "games/new_game", to: "games#new_game"
+  post "games/create_game", to: "games#create_game", as: "create_game"
+
+  get "games/:id", to: "games#show", as: :game
+
+
+
+
+  # Officials in the Games routes
+
+  get "games/officials_in_the_game/:game_id", to: "games#officials_in_the_game", as: :games_officials_in_the_game
+  post "games/create_officials_in_the_game", to: "games#create_officials_in_the_game", as: :create_officials_in_the_game
+
+
+
+  # Rooster routes
+
+  get "games/rooster", to: "games#rooster"
+
+
+
+  # Devise routes
+
   devise_for :players, controllers: { registrations: 'registrations' }
 
-  patch "players", to: "registrations#update"
-
   devise_scope :player do
-    delete "logout", to: "devise/sessions#destroy", as: :logout
-    post "login", to: "devise/sessions#create", as: :login
     post "players/sign_up", to: "devise/sessions#new", as: :sign_up
+    post "login", to: "devise/sessions#create", as: :login
+    delete "logout", to: "devise/sessions#destroy", as: :logout
   end
 
-  get "players/:id", to: "players#show", as: :player
-  get "players", to: "players#index"
-
-
-  # get "games"
-  root to: "players#home"
-  # get "leagues", to: "leagues#index"
-  get "games", to: "games#menu"
-  get "games/new_game", to: "games#new_game"
-  get "games/rooster", to: "games#rooster"
-  get "games/ref_team", to: "games#ref_team"
-  get "games/:id", to: "games#show", as: :game
-  post "games/create_game", to: "games#create_game", as: "create_game"
+  patch "players", to: "registrations#update"
 
 end
 
