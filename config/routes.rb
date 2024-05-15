@@ -1,5 +1,19 @@
 Rails.application.routes.draw do
 
+
+  # Devise routes
+
+  devise_for :players, controllers: { registrations: 'registrations' }
+
+  devise_scope :player do
+    post "players/sign_up", to: "devise/sessions#new", as: :sign_up
+    post "login", to: "devise/sessions#create", as: :login
+    delete "logout", to: "devise/sessions#destroy", as: :logout
+  end
+
+  patch "players", to: "registrations#update"
+
+
   # Players routes
 
   root to: "players#home"
@@ -17,32 +31,16 @@ Rails.application.routes.draw do
   get "games/:id", to: "games#show", as: :game
 
 
-
-
   # Officials in the Games routes
 
   get "games/officials_in_the_game/:game_id", to: "games#officials_in_the_game", as: :games_officials_in_the_game
   post "games/create_officials_in_the_game", to: "games#create_officials_in_the_game", as: :create_officials_in_the_game
 
 
-
   # Rooster routes
 
   get "games/rooster", to: "games#rooster"
 
-
-
-  # Devise routes
-
-  devise_for :players, controllers: { registrations: 'registrations' }
-
-  devise_scope :player do
-    post "players/sign_up", to: "devise/sessions#new", as: :sign_up
-    post "login", to: "devise/sessions#create", as: :login
-    delete "logout", to: "devise/sessions#destroy", as: :logout
-  end
-
-  patch "players", to: "registrations#update"
 
 end
 
