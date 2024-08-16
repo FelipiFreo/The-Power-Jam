@@ -1,0 +1,26 @@
+.cards {
+
+  grid-template-columns:1fr 1fr;
+  grid-gap:0px;
+}
+
+.card-ref {
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(246, 243, 243);
+}
+
+.card-ref-data {
+  // flex-grow: 1;
+
+}
+
+.row {
+  display: flex;
+}
+
+.col-6 {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}

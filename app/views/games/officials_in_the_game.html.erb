@@ -1,5 +1,75 @@
 officials_in_the_game.html.erb
 
+<%# teste de grid %>
+<div class="container">
+  <div class="row">
+
+    <!-- Lista à esquerda -->
+    <div class="col-6">
+      <div class="border border-5 ">
+
+        <% @official_position.each do |position| %>
+
+          <% if position.id < 5 %>
+
+            <div class="border border-3 border-primary my-3">
+              <div class="cards card-ref">
+
+                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSn5Lj_iuoQmSpl3BB4QQpx7P-LMLAyq1LHaw&s" alt="foto" width=120px height=120px>
+
+                    <%= simple_form_for @officials_in_the_game, url: create_officials_in_the_game_path, method: :post do |f| %>
+
+                      <div class="card-ref-data">
+                        <%= f.input :player_id, collection: Player.all.map { |player| [player.calling_name, player.id] }, label: "#{position.official_position}", prompt: "Selecione uma jogadora" %>
+                        <%= f.hidden_field :game_id, value: @game_show.id %>
+                        <%= f.hidden_field :official_position_id, value: position.id %>
+                        <%= f.hidden_field :is_shadowing, value: false %>
+                        <%= f.button :submit, "Salvar" %>
+                      <% end %>
+                    </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+
+    <!-- Lista à direita -->
+    <div class="col-6">
+      <div class="border border-5 ">
+
+        <% @official_position.each do |position| %>
+
+          <% if position.id > 4 %>
+
+            <div class="border border-3 border-primary my-3">
+              <div class="cards card-ref">
+
+                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSn5Lj_iuoQmSpl3BB4QQpx7P-LMLAyq1LHaw&s" alt="foto" width=120px height=120px>
+
+                    <%= simple_form_for @officials_in_the_game, url: create_officials_in_the_game_path, method: :post do |f| %>
+
+                      <div class="card-ref-data">
+                        <%= f.input :player_id, collection: Player.all.map { |player| [player.calling_name, player.id] }, label: "#{position.official_position}", prompt: "Selecione uma jogadora" %>
+                        <%= f.hidden_field :game_id, value: @game_show.id %>
+                        <%= f.hidden_field :official_position_id, value: position.id %>
+                        <%= f.hidden_field :is_shadowing, value: false %>
+                        <%= f.button :submit, "Salvar" %>
+                      <% end %>
+                    </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+<hr><hr>
 
 <% @official_position.each do |position| %>
   <%= simple_form_for @officials_in_the_game, url: create_officials_in_the_game_path, method: :post do |f| %>
@@ -20,7 +90,7 @@ officials_in_the_game.html.erb
     <p>Player Name: <%= form.collection_select :player_id, Player.all, :id, :calling_name %></p>
     <p>Official Position: <%= form.collection_select :position_id, OfficialPosition.all, :id, :official_position %></p>
     <p>Is Shadowing: <%= form.check_box :is_shadowing %></p>
-    
+
     <p>Game ID: <%= @game_show.id %><%= form.hidden_field :game_id %></p>
 
     <%= form.submit "Salvar jogadora como Ref" %>
