@@ -33,35 +33,41 @@ class GamesController < ApplicationController
   end
 
 
-
-
-
 #####################################
 
   def officials_in_the_game
     @game_show = Game.find(params[:game_id])
     @official_position = OfficialPosition.all
-    @officials_in_the_game = OfficialsInTheGame.new(game_id: @game_show.id)
-    # @officials_in_the_game = OfficialsInTheGame.new(officials_in_the_game_params)
+
+    @officials_in_the_game = OfficialsInTheGame.where(game_id: @game_show.id)
+
+    @officials_in_the_game = [] if @officials_in_the_game.empty?
   end
 
   def create_officials_in_the_game
-      @officials_in_the_game = OfficialsInTheGame.new(officials_in_the_game_params)
 
-    if @officials_in_the_game.save
-      flash.now[:notice] = "Equipe de arbitragem criada com sucesso!"
-      redirect_to game_path(@officials_in_the_game.game_id)
+
+    # Encontra ou inicializa um registro para o jogo e a posição oficial
+    @official = OfficialsInTheGame.find_or_initialize_by(
+      game_id: officials_in_the_game_params[:game_id],
+      official_position_id: officials_in_the_game_params[:official_position_id]
+    )
+
+    # Atualiza o registro com os parâmetros fornecidos
+    @official.assign_attributes(officials_in_the_game_params)
+
+    if @official.save
+      flash.now[:notice] = "Equipe de arbitragem salva com sucesso!"
+      redirect_to game_path(@official.game_id)
     else
-      flash.now[:alert] = "Não foi possível criar a equipe de arbitragem."
+      flash.now[:alert] = "Não foi possível salvar a equipe de arbitragem."
       render :officials_in_the_game
     end
-
-
-
-
-
-
   end
+
+
+
+
 
 ############################################
 
