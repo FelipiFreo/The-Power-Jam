@@ -45,7 +45,7 @@ class GamesController < ApplicationController
   end
 
   def create_officials_in_the_game
-
+    # o nome mais adequado para essa classe seria algo como create_or_update
 
     # Encontra ou inicializa um registro para o jogo e a posição oficial
     @official = OfficialsInTheGame.find_or_initialize_by(
