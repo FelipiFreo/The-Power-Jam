@@ -25,63 +25,112 @@
   padding-bottom: 0;
 }
 
-// Abaixo, cards da estrutura do Officials in the Game
+  // Abaixo, cards da estrutura do Officials in the Game
 
-.card-select-official-in-the-game {
-  border: 1px solid #3e5151;
-  border-radius: 8px;
-  padding: 16px;
-  margin: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background-color: #decba4;
-  transition: transform 0.3s;
-  display: flex;
-  align-items: center;
-}
+  .card-select-official-in-the-game {
+    border: 1px solid #3e5151;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #decba4;
+    transition: transform 0.3s;
+    display: flex;
+    align-items: center;
+  }
 
-.card-select-official-in-the-game:hover {
-  transform: scale(1.04);
-}
+  .card-select-official-in-the-game:hover {
+    transform: scale(1.04);
+  }
 
-.img-squared-avatar {
-  border: 4px solid #3e5151;
-  height: 80px;
-  width: 80px;
-  object-fit: cover;
-}
+  .img-squared-avatar {
+    border: 4px solid #3e5151;
+    height: 80px;
+    width: 80px;
+    object-fit: cover;
+  }
 
-.info-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
+  .info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
 
-}
+  }
 
-.box-player-info {
-  border: 3px solid #3e5151;
-  border-left: none;
-  background-color: #343434;
-  color: #f4f4f4;
-  padding: 1px 12px;
-  width: 100%;
-  max-width: 20ch;
-  text-align: left;
+  .box-player-info {
+    border: 3px solid #3e5151;
+    border-left: none;
+    background-color: #343434;
+    color: #f4f4f4;
+    padding: 1px 12px 1px 12px;
+    width: 100%;
+    max-width: 20ch;
+    text-align: left;
+    font-weight: 550;
 
+  }
 
+  .box-official-position {
+    border: 2px solid #3e5151;
+    border-left: none;
+    border-top: none;
+    background-color: #191613;
+    color: #f4f4f4;
+    padding: 0px 12px;
+    font-size: smaller;
+    width: auto;
+    max-width: 15ch;
+    text-align: center;
+    font-style: italic;
 
-}
+  }
 
-.box-official-position {
-  border: 2px solid #3e5151;
-  border-left: none;
-  border-top: none;
-  background-color: #191613;
-  color: #f4f4f4;
-  padding: 0px 12px;
-  font-size: smaller;
-  width: auto;
-  max-width: 10ch;
-  text-align: center;
+  .box-player-info-rosa {
+    border: 3px solid #3e5151;
+    border-left: none;
+    background-color: #f9dae8;
+    color: #1e1e1e;
+    padding: 1px 12px;
+    width: 100%;
+    max-width: 20ch;
+    text-align: left;
+    font-weight: 550;
 
-}
+  }
+
+  .box-official-position-rosa {
+    border: 2px solid #3e5151;
+    border-left: none;
+    border-top: none;
+    background-color: #f0b5d4;
+    color: #1e1e1e;
+    padding: 0px 12px;
+    font-size: smaller;
+    width: auto;
+    max-width: 10ch;
+    text-align: center;
+    font-style: italic;
+
+  }
+
+  .select-box-limpa {
+    border: none;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    width: 100%;
+    color: inherit;
+    font-size: inherit;
+
+    outline: none; /* Remove a borda de foco do navegador */
+    -webkit-appearance: none; /* Remove a aparência padrão em navegadores WebKit */
+    -moz-appearance: none; /* Remove a aparência padrão em navegadores Firefox */
+    appearance: none; /* Remove a aparência padrão em outros navegadores */
+    box-shadow: none;
+
+  line-height: 1; /* Remove espaçamento vertical adicional */
+  height: auto; /* Ajusta a altura do select */
+  display: block;
+
+  }
