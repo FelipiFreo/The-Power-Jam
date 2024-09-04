@@ -1,3 +1,26 @@
+<%# testando css do card %>
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <div class="card-select-official-in-the-game">
+        <img class="img-squared-avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSn5Lj_iuoQmSpl3BB4QQpx7P-LMLAyq1LHaw&s" >
+
+        <div class="info-container">
+          <div class="box-player-info">
+            Jogadora
+          </div>
+
+          <div class="box-official-position">
+            Posição
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 <%# Simplificado com grid %>
 <div class="container">
@@ -23,9 +46,9 @@
                   <div class="card-ref-data">
                     <%= f.input :player_id,
                       collection: Player.all.map { |player| [player.calling_name, player.id] },
-                      label: "#{position.official_position}",
-                      prompt: "Selecione uma jogadora",
                       selected: player_assigned_as_official.player_id,
+                      prompt: "Selecione uma jogadora",
+                      label: "#{position.official_position}",
                       input_html: { onchange: 'this.form.submit()' } %>
 
                     <%= f.hidden_field :game_id, value: @game_show.id %>
