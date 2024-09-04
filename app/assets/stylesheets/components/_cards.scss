@@ -33,7 +33,7 @@
   padding: 16px;
   margin: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
+  background-color: #decba4;
   transition: transform 0.3s;
   display: flex;
   align-items: center;
@@ -61,7 +61,8 @@
 .box-player-info {
   border: 3px solid #3e5151;
   border-left: none;
-  background-color: #ccc;
+  background-color: #343434;
+  color: #f4f4f4;
   padding: 1px 12px;
   width: 100%;
   max-width: 20ch;
@@ -75,7 +76,8 @@
   border: 2px solid #3e5151;
   border-left: none;
   border-top: none;
-  background-color: #ccc;
+  background-color: #191613;
+  color: #f4f4f4;
   padding: 0px 12px;
   font-size: smaller;
   width: auto;
