@@ -123,6 +123,9 @@
     color: inherit;
     font-size: inherit;
 
+    box-shadow: none; /* Remove qualquer sombra */
+    appearance: none; /* Remove o estilo padrão do select */
+
     outline: none; /* Remove a borda de foco do navegador */
     -webkit-appearance: none; /* Remove a aparência padrão em navegadores WebKit */
     -moz-appearance: none; /* Remove a aparência padrão em navegadores Firefox */
@@ -133,4 +136,5 @@
   height: auto; /* Ajusta a altura do select */
   display: block;
 
+  box-sizing: border-box; /* Inclui padding e border no cálculo da largura/altura */
   }
