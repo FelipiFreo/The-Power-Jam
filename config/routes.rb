@@ -36,6 +36,8 @@ Rails.application.routes.draw do
   get "games/officials_in_the_game/:game_id", to: "games#officials_in_the_game", as: :games_officials_in_the_game
   post "games/create_officials_in_the_game", to: "games#create_officials_in_the_game", as: :create_officials_in_the_game
 
+  post 'update_chosen_players', to: 'games#update_chosen_players'
+
 
   # Rooster routes
 

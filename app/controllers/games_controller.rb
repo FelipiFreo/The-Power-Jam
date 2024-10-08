@@ -42,7 +42,26 @@ class GamesController < ApplicationController
     @officials_in_the_game = OfficialsInTheGame.where(game_id: @game_show.id)
 
     @officials_in_the_game = [] if @officials_in_the_game.empty?
+
+    @players = Player.all
+
+    @temporary_chosen_players_array = session[:chosen_players] || []
+
+    session[:chosen_players] = @temporary_chosen_players_array
+
+    puts @players.reject { |player| @temporary_chosen_players_array.map(&:id).include?(player.id) }
+
+
+
   end
+
+
+    def update_chosen_players
+      session[:chosen_players] = params[:chosen_players]
+      render json: { success: true }
+    end
+
+
 
   def create_officials_in_the_game
     # o nome mais adequado para essa classe seria algo como create_or_update

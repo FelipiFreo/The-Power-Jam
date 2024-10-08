@@ -1,141 +1,22 @@
-<%# testando css do card %>
-<div class="container">
-  <div class="row">
-    <div class="col-6">
-      <div class="card-select-official-in-the-game">
-        <img class="img-squared-avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSn5Lj_iuoQmSpl3BB4QQpx7P-LMLAyq1LHaw&s" >
+<%# novos testes de layout %>
 
-        <div class="info-container">
-          <div class="box-player-info">
-            Jogadora
-          </div>
+<head>
 
-          <div class="box-official-position">
-            Posição
-          </div>
+  <%= javascript_include_tag 'officials_in_the_game', 'data-turbolinks-track': 'reload'  %>
 
-        </div>
-      </div>
-    </div>
-
-        <div class="col-6">
-      <div class="card-select-official-in-the-game">
-        <img class="img-squared-avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSn5Lj_iuoQmSpl3BB4QQpx7P-LMLAyq1LHaw&s" >
-
-        <div class="info-container">
-          <div class="box-player-info-rosa">
-            Jogadora
-          </div>
-
-          <div class="box-official-position-rosa">
-            Posição
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<br><br><br>
-
-<%# Simplificado com grid %>
-<div class="container">
-  <div class="row">
-
-    <% # Define os grupos com base na presença de "Referee" no nome da posição %>
-    <% official_positions_grouped_by_referee_or_nsoXXX = @official_position.group_by { |position| position.official_position.include?("Referee") ? "Referee" : "NSO" } %>
-
-    <% # Loop para criar duas colunas %>
-    <% official_positions_grouped_by_referee_or_nsoXXX.each do |official_category, official_positions| %>
-      <div class="col-6">
-        <div class="border border-5">
-
-          <% official_positions.each do |position| %>
-
-            <% player_assigned_as_official = @officials_in_the_game.find { |o| o.official_position_id == position.id } || OfficialsInTheGame.new(game_id: @game_show.id, official_position_id: position.id) %>
-
-            <div class="border border-3 border-primary my-3">
-              <div class="cards card-ref">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSn5Lj_iuoQmSpl3BB4QQpx7P-LMLAyq1LHaw&s" alt="foto" width="120px" height="120px">
-
-                <%= simple_form_for player_assigned_as_official, url: create_officials_in_the_game_path, method: :post do |f| %>
-                  <div class="card-ref-data">
-                    <%= f.input :player_id,
-                      collection: Player.all.map { |player| [player.calling_name, player.id] },
-                      selected: player_assigned_as_official.player_id,
-                      prompt: "Selecione uma jogadora",
-                      label: "#{position.official_position}",
-                      input_html: { onchange: 'this.form.submit()' } %>
-
-                    <%= f.hidden_field :game_id, value: @game_show.id %>
-                    <%= f.hidden_field :official_position_id, value: position.id %>
-                    <%= f.hidden_field :is_shadowing, value: false %>
-                  </div>
-                <% end %>
-              </div>
-            </div>
-
-          <% end %>
-
-        </div>
-      </div>
-    <% end %>
-
-  </div>
-</div>
+</head>
 
 
-<div class="container">
-  <div class="row">
+<%= simple_form_for :player_selection do |f| %>
 
-    <% official_positions_grouped_by_referee_or_nso = @official_position.group_by { |position| position.official_position.include?("Referee") ? "Referee" : "NSO" } %>
+  <%= f.input :player_id,
+              collection: @players.reject { |player| @temporary_chosen_players_array.map(&:id).include?(player.id) },
+              label_method: :calling_name,
+              value_method: :id,
+              include_blank: "digite",
+              input_html: { id: 'playerSelectBox',
+                            onchange: 'addPlayer({ id: this.value, calling_name: this.options[this.selectedIndex].text })' } %>
 
-      <% official_positions_grouped_by_referee_or_nso.each do |official_category, official_positions| %>
+<% end %>
 
-        <div class="col-6">
-
-            <% official_positions.each do |position| %>
-
-              <div class="card-select-official-in-the-game">
-
-                <% player_assigned_as_official = @officials_in_the_game.find { |o| o.official_position_id == position.id } || OfficialsInTheGame.new(game_id: @game_show.id, official_position_id: position.id) %>
-
-                  <img  class="img-squared-avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSn5Lj_iuoQmSpl3BB4QQpx7P-LMLAyq1LHaw&s">
-
-                          <div class="info-container">
-
-                            <%= simple_form_for player_assigned_as_official, url: create_officials_in_the_game_path, method: :post do |f| %>
-
-                              <div class="box-player-info">
-                                <%= f.input :player_id,
-                                    collection: Player.all.map { |player| [player.calling_name, player.id] },
-                                    selected: player_assigned_as_official.player_id,
-                                    prompt: "Selecione uma jogadora",
-                                    label: false,
-                                    input_html: { onchange: 'this.form.submit()', class: 'select-box-limpa' }
-
-                                %>
-
-                                <%=
-                                    f.hidden_field :game_id, value: @game_show.id
-                                    f.hidden_field :official_position_id, value: position.id
-                                    f.hidden_field :is_shadowing, value: false
-                                %>
-
-                              </div>
-
-                              <div class="box-official-position">
-                                <%= position.official_position %>
-                              </div>
-                            <% end %>
-                          </div>
-              </div>
-
-            <% end %>
-
-        </div>
-
-      <% end %>
-  </div>
-</div>
+<div id="array-display"></div>
