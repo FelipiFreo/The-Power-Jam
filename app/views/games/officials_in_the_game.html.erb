@@ -10,7 +10,9 @@
 <%= simple_form_for :player_selection do |f| %>
 
   <%= f.input :player_id,
-              collection: @players.reject { |player| @temporary_chosen_players_array.map(&:id).include?(player.id) },
+              collection: Player.all.reject { |player| @temporary_chosen_players_array.map(&:id).include?(player.id) },
+              # collection: @players.reject { |player| @temporary_chosen_players_array.map(&:id).include?(player.id) },
+
               label_method: :calling_name,
               value_method: :id,
               include_blank: "digite",

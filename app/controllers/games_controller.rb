@@ -8,8 +8,6 @@ class GamesController < ApplicationController
 
   def show
     @game_show = Game.find(params[:id])
-    # @officials_in_the_game = OfficialsInTheGame.find()
-
 
   end
 
@@ -22,6 +20,8 @@ class GamesController < ApplicationController
   def create_game
     @new_game = Game.new(game_params)
     @game_creator = current_player
+    # Atenção!
+    # é preciso fazer uma migration para incluir o game_creator ou game_owner na tabela games
 
     if @new_game.save
       flash.now[:notice] = "Novo jogo criado com sucesso!"
@@ -31,60 +31,6 @@ class GamesController < ApplicationController
       render :new_game
     end
   end
-
-
-#####################################
-
-  def officials_in_the_game
-    @game_show = Game.find(params[:game_id])
-    @official_position = OfficialPosition.all
-
-    @officials_in_the_game = OfficialsInTheGame.where(game_id: @game_show.id)
-
-    @officials_in_the_game = [] if @officials_in_the_game.empty?
-
-    @players = Player.all
-
-    @temporary_chosen_players_array = session[:chosen_players] || []
-
-    session[:chosen_players] = @temporary_chosen_players_array
-
-    puts @players.reject { |player| @temporary_chosen_players_array.map(&:id).include?(player.id) }
-
-
-
-  end
-
-
-    def update_chosen_players
-      session[:chosen_players] = params[:chosen_players]
-      render json: { success: true }
-    end
-
-
-
-  def create_officials_in_the_game
-    # o nome mais adequado para essa classe seria algo como create_or_update
-
-    # Encontra ou inicializa um registro para o jogo e a posição oficial
-    @official = OfficialsInTheGame.find_or_initialize_by(
-      game_id: officials_in_the_game_params[:game_id],
-      official_position_id: officials_in_the_game_params[:official_position_id]
-    )
-
-    # Atualiza o registro com os parâmetros fornecidos
-    @official.assign_attributes(officials_in_the_game_params)
-
-    if @official.save
-      flash.now[:notice] = "Equipe de arbitragem salva com sucesso!"
-      redirect_to game_path(@official.game_id)
-    else
-      flash.now[:alert] = "Não foi possível salvar a equipe de arbitragem."
-      render :officials_in_the_game
-    end
-  end
-
-
 
 
 
@@ -109,3 +55,110 @@ class GamesController < ApplicationController
   end
 
 end
+
+
+#####################################
+
+def officials_in_the_game
+
+  show
+
+  @players = Player.all
+
+  @official_position = OfficialPosition.all
+
+  @officials_in_the_game = OfficialsInTheGame.where(game_id: @game_show.id)
+
+  @officials_in_the_game = [] if @officials_in_the_game.empty?
+
+
+  temporary_chosen_players_array_update
+
+  session_update
+
+end
+
+
+
+
+
+def create_officials_in_the_game
+  # o nome mais adequado para essa classe seria algo como create_or_update
+  # mudar o nome dessa classe aqui e onde precisar
+
+  # Encontra ou inicializa um registro para o jogo e a posição oficial
+  @official = OfficialsInTheGame.find_or_initialize_by(
+    game_id: officials_in_the_game_params[:game_id],
+    official_position_id: officials_in_the_game_params[:official_position_id]
+    )
+
+    # Atualiza o registro com os parâmetros fornecidos
+    @official.assign_attributes(officials_in_the_game_params)
+
+    if @official.save
+      flash.now[:notice] = "Equipe de arbitragem salva com sucesso!"
+      redirect_to game_path(@official.game_id)
+    else
+      flash.now[:alert] = "Não foi possível salvar a equipe de arbitragem."
+      render :officials_in_the_game
+    end
+end
+
+
+  private
+
+  # Métodos auxiliares
+  def session_update
+    session[:chosen_players] = @temporary_chosen_players_array
+  end
+
+  def temporary_chosen_players_array_update
+    @temporary_chosen_players_array = session[:chosen_players] || []
+  end
+
+  def player_exists?(player_id)
+    @temporary_chosen_players_array.map(&:id).include?(player_id)
+  end
+
+
+  # métodos de negócios
+  def manage_temporary_chosen_players_array
+
+    temporary_chosen_players_array_update
+
+    session_update
+  end
+
+  def add_player_to_temp_array(player_id)
+    return if player_exists?(player_id)
+
+    @temporary_chosen_players_array << Player.find(player_id)
+
+    session_update
+  end
+
+  def remove_player_from_temp_array(player)
+    return unless player_exists?(player)
+
+    @temporary_chosen_players_array.delete(player)
+
+    session_update
+  end
+
+
+  def update_chosen_players
+    player_id = params[:chosen_player_id]
+
+    add_player_to_temp_array(player_id)
+
+    session_update
+
+    render json: { success: true }
+  end
+
+  def current_chosen_players
+
+    chosen_players = @temporary_chosen_players_array
+
+    render json: { chosen_players: chosen_players}
+  end
