@@ -59,9 +59,14 @@ end
 
 #####################################
 
+#games_controller.rb
+
 def officials_in_the_game
 
   show
+  # @temporary_chosen_players_array = []
+  @temporary_chosen_players_array = [1, 2, 3]
+
 
   @players = Player.all
 
@@ -105,7 +110,7 @@ def create_officials_in_the_game
 end
 
 
-  private
+  # private
 
   # Métodos auxiliares
   def session_update
@@ -113,11 +118,13 @@ end
   end
 
   def temporary_chosen_players_array_update
-    @temporary_chosen_players_array = session[:chosen_players] || []
+    @temporary_chosen_players_array = session[:chosen_players] || [1]
+    @temporary_chosen_players_array = [1, 2, 3]
+
   end
 
   def player_exists?(player_id)
-    @temporary_chosen_players_array.map(&:id).include?(player_id)
+    @temporary_chosen_players_array.include?(player_id)
   end
 
 
@@ -132,7 +139,7 @@ end
   def add_player_to_temp_array(player_id)
     return if player_exists?(player_id)
 
-    @temporary_chosen_players_array << Player.find(player_id)
+    @temporary_chosen_players_array << player_id
 
     session_update
   end
@@ -151,14 +158,33 @@ end
 
     add_player_to_temp_array(player_id)
 
-    session_update
+    Rails.logger.debug "Array temporária após adicionar jogadora: #{@temporary_chosen_players_array.inspect}"
 
     render json: { success: true }
   end
 
   def current_chosen_players
 
-    chosen_players = @temporary_chosen_players_array
+    chosen_players = @temporary_chosen_players_array || []
+
+    Rails.logger.debug "Jogadoras escolhidas: #{chosen_players.inspect}"
 
     render json: { chosen_players: chosen_players}
+  end
+
+  def refresh_selectbox
+    render partial: 'selectbox'
+  end
+
+  def chosen_players_array
+    @temporary_chosen_players_array || []
+  end
+
+  def lista_filtrada
+   # @temporary_chosen_players_array = [1, 2, 3]
+
+   @temporary_chosen_players_array = [1] if @temporary_chosen_players_array.nil?
+
+
+    Player.all.reject { |player| @temporary_chosen_players_array.include?(player.id)}
   end

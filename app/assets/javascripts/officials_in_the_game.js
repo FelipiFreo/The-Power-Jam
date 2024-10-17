@@ -1,10 +1,11 @@
-console.log("Testando o arquivo JavaScript.");
+//officials_in_the_game.js
 
+console.log("Testando o arquivo officials_in_the_game.js");
 
 function addPlayer(chosenPlayer) {
 
     // Envia o ID da jogadora selecionada para o Ruby
-   fetch('/update_chosen_players', {
+    fetch('/update_chosen_players', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -17,14 +18,16 @@ function addPlayer(chosenPlayer) {
 
   .then(response => response.json())
   .then(response => {
-    if (response.sucess) {
+    if (response.success) {
 
       updatePlayerDisplay();
+      refreshSelectbox();
 
-
+      } else {
+      console.error('Falha ao adicionar jogadora:', response.message);
     }
   })
-  .catch(error => console.error('Erro ao atualizar jogadores:', error));
+  .catch(error => console.error('Erro ao adicionar jogadora:', error));
 }
 
 function updatePlayerDisplay() {
@@ -32,9 +35,28 @@ function updatePlayerDisplay() {
   fetch('/current_chosen_players')
     .then(response => response.json())
     .then(data => {
-      document.getElementById('array-display').textContent = data.players.map(player = player.calling_name).join(', ');
-    });
 
+      console.log('Dados recebidos:', data.chosen_players);
+
+
+      // Atualizando o conteúdo do elemento no DOM
+      document.getElementById('array-display').textContent = data.chosen_players.map(player => player.calling_name).join(', ');
+      });
+}
+
+
+function refreshSelectbox() {
+
+  // Faz uma requisição AJAX para o controlador que renderiza a select box
+  fetch('/refresh_selectbox')
+    .then(response => response.text())
+    .then(html => {
+
+      // Substitui a select box existente pelo novo conteúdo
+      document.getElementById('playerSelectBox').innerHTML = html;
+
+    })
+    .catch(error => console.error('Erro ao atualizar selectbox:', error));
 }
 
 // function updatePillDisplay () {
@@ -48,4 +70,3 @@ function updatePlayerDisplay() {
 
 //     pillContainer.appendChild(pill);
 //   });
-// }

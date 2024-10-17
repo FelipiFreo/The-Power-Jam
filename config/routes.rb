@@ -38,6 +38,8 @@ Rails.application.routes.draw do
 
   post 'update_chosen_players', to: 'games#update_chosen_players'
   get 'current_chosen_players', to: 'games#current_chosen_players'
+  get 'refresh_selectbox', to: 'games#refresh_selectbox'
+
 
 
   # Rooster routes
