@@ -1,0 +1,11 @@
+<head>
+
+    <%= javascript_include_tag 'officials_in_the_game'  %>
+
+</head>
+
+<%= render 'shared/selectbox', lista_filtrada: @lista_filtrada %>
+
+<div id="array-display"></div>
+
+<%= @temporary_chosen_players_array.inspect %>

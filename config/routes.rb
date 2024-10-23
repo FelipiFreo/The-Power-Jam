@@ -27,18 +27,18 @@ Rails.application.routes.draw do
 
   get "games/new_game", to: "games#new_game"
   post "games/create_game", to: "games#create_game", as: "create_game"
-
+  
   get "games/:id", to: "games#show", as: :game
 
 
   # Officials in the Games routes
 
-  get "games/officials_in_the_game/:game_id", to: "games#officials_in_the_game", as: :games_officials_in_the_game
-  post "games/create_officials_in_the_game", to: "games#create_officials_in_the_game", as: :create_officials_in_the_game
+  get "games/officials_in_the_game/:game_id", to: "officials_in_the_game#officials_in_the_game", as: :games_officials_in_the_game
+  post "games/create_officials_in_the_game", to: "officials_in_the_game#create_officials_in_the_game", as: :create_officials_in_the_game
 
-  post 'update_chosen_players', to: 'games#update_chosen_players'
-  get 'current_chosen_players', to: 'games#current_chosen_players'
-  get 'refresh_selectbox', to: 'games#refresh_selectbox'
+  post 'update_chosen_players', to: 'officials_in_the_game#update_chosen_players'
+  get 'current_chosen_players', to: 'officials_in_the_game#current_chosen_players'
+  get 'refresh_selectbox', to: 'officials_in_the_game#refresh_selectbox'
 
 
 

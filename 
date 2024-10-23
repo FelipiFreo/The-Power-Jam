@@ -1,0 +1,532 @@
+[1mdiff --git a/.tool-versions b/.tool-versions[m
+[1mnew file mode 100644[m
+[1mindex 0000000..342c259[m
+[1m--- /dev/null[m
+[1m+++ b/.tool-versions[m
+[36m@@ -0,0 +1,2 @@[m
+[32m+[m[32mruby 3.1.2[m
+[32m+[m[32mnodejs 20.18.0[m
+[1mdiff --git a/README.md b/README.md[m
+[1mindex 3e435c1..080cba0 100644[m
+[1m--- a/README.md[m
+[1m+++ b/README.md[m
+[36m@@ -1 +1,21 @@[m
+ Rails app generated with [lewagon/rails-templates](https://github.com/lewagon/rails-templates), created by the [Le Wagon coding bootcamp](https://www.lewagon.com) team.[m
+[32m+[m
+[32m+[m[32mEsse código deve ser rodado sempre que houver alterações em arquivos css e java script[m
+[32m+[m[32mSempre que for subir novos arquivos pra produção[m
+[32m+[m[32mrails assets:precompile[m
+[32m+[m
+[32m+[m[32mvai precisar de Stimulus + Turbo que é o howtire(framework)[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m[32m, redis(usar esse porque é obrigado pra usar websocket),[m
+[32m+[m
+[32m+[m[32mwebsocket é necessário para trabalho em segundo plano e sincronização[m
+[32m+[m
+[32m+[m
+[32m+[m[32mturbo quase substitui actioncable do rails[m
+[32m+[m
+[32m+[m
+[32m+[m[32mestudar turbo stream[m
+[32m+[m[32mestudar stimulus[m
+[32m+[m[32mestudar hotwired[m
+[1mdiff --git a/app/assets/javascripts/officials_in_the_game.js b/app/assets/javascripts/officials_in_the_game.js[m
+[1mindex 4eeb178..2d79990 100644[m
+[1m--- a/app/assets/javascripts/officials_in_the_game.js[m
+[1m+++ b/app/assets/javascripts/officials_in_the_game.js[m
+[36m@@ -2,25 +2,49 @@[m
+ [m
+ console.log("Testando o arquivo officials_in_the_game.js");[m
+ [m
+[32m+[m[32m// Ouça o evento 'turbolinks:load' para garantir que o DOM esteja pronto[m
+[32m+[m[32mdocument.addEventListener('turbolinks:load', function() {[m
+[32m+[m[32m  // Verifica se o selectBox está no DOM[m
+[32m+[m[32m  const selectBox = document.getElementById('playerSelectBox');[m
+[32m+[m
+[32m+[m[32m  if (selectBox) {[m
+[32m+[m[32m    console.log('O selectBox foi encontrado no DOM:', selectBox);[m
+[32m+[m[32m  } else {[m
+[32m+[m[32m    console.error('O selectBox não foi encontrado no DOM.');[m
+[32m+[m[32m  }[m
+[32m+[m[32m});[m
+[32m+[m
+[32m+[m
+ function addPlayer(chosenPlayer) {[m
+ [m
+[31m-    // Envia o ID da jogadora selecionada para o Ruby[m
+[31m-    fetch('/update_chosen_players', {[m
+[32m+[m[32m  console.log("ID da jogadora selecionada:", chosenPlayer); // Adicione esta linha[m
+[32m+[m
+[32m+[m[32m  const selectBox = document.getElementById('playerSelectBox');[m
+[32m+[m
+[32m+[m[32m  if (selectBox) {[m
+[32m+[m[32m    selectBox.value = chosenPlayer;[m
+[32m+[m[32m  } else {[m
+[32m+[m[32m    console.error('Elemento selectBox não encontrado');[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  // Envia o ID da jogadora selecionada para o Ruby[m
+[32m+[m[32m  fetch('http://localhost:3000/update_chosen_players', {[m
+     method: 'POST',[m
+     headers: {[m
+       'Content-Type': 'application/json',[m
+       'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content[m
+     },[m
+ [m
+[31m-     // Enviando apenas o ID da jogadora selecionada[m
+[31m-    body: JSON.stringify({ chosen_player_id: chosenPlayer.id })[m
+[32m+[m[32m    // Enviando apenas o ID da jogadora selecionada[m
+[32m+[m[32m    body: JSON.stringify({ chosen_player_id: chosenPlayer })[m
+   })[m
+[31m-[m
+   .then(response => response.json())[m
+   .then(response => {[m
+     if (response.success) {[m
+ [m
+[31m-      updatePlayerDisplay();[m
+[32m+[m[32m      console.log('Função chamadax');[m
+[32m+[m
+[32m+[m[32m      updateTemporaryChosenPlayersDisplay();[m
+       refreshSelectbox();[m
+ [m
+       } else {[m
+[36m@@ -30,7 +54,9 @@[m [mfunction addPlayer(chosenPlayer) {[m
+   .catch(error => console.error('Erro ao adicionar jogadora:', error));[m
+ }[m
+ [m
+[31m-function updatePlayerDisplay() {[m
+[32m+[m[32mfunction updateTemporaryChosenPlayersDisplay() {[m
+[32m+[m
+[32m+[m[32m  console.log('Função chamada');[m
+ [m
+   fetch('/current_chosen_players')[m
+     .then(response => response.json())[m
+[36m@@ -38,25 +64,49 @@[m [mfunction updatePlayerDisplay() {[m
+ [m
+       console.log('Dados recebidos:', data.chosen_players);[m
+ [m
+[32m+[m[32m      const displayElement = document.getElementById('array-display');[m
+[32m+[m[32m      if (displayElement) {[m
+[32m+[m[32m        // Acessar apenas os IDs e atualizá-los no array-display[m
+[32m+[m[32m        const playerIds = data.chosen_players.map(player => player.id).join(', ');[m
+[32m+[m[32m        displayElement.textContent = playerIds;[m
+ [m
+[31m-      // Atualizando o conteúdo do elemento no DOM[m
+[31m-      document.getElementById('array-display').textContent = data.chosen_players.map(player => player.calling_name).join(', ');[m
+[31m-      });[m
+[32m+[m[32m        console.log('Atualizando array-display com:', playerIds);[m
+[32m+[m[32m      } else {[m
+[32m+[m[32m        console.error('Elemento #array-display não encontrado no DOM');[m
+[32m+[m[32m      }[m
+[32m+[m[32m    })[m
+[32m+[m[32m    .catch(error => console.error('Erro ao buscar jogadoras escolhidas:', error));[m
+ }[m
+ [m
+[31m-[m
+ function refreshSelectbox() {[m
+[32m+[m[32m  let html;[m
+ [m
+   // Faz uma requisição AJAX para o controlador que renderiza a select box[m
+   fetch('/refresh_selectbox')[m
+     .then(response => response.text())[m
+[31m-    .then(html => {[m
+[32m+[m[32m    .then(data => {[m
+[32m+[m[32m      html = data[m
+ [m
+[31m-      // Substitui a select box existente pelo novo conteúdo[m
+[31m-      document.getElementById('playerSelectBox').innerHTML = html;[m
+[32m+[m[32m  //       // Substitui a select box existente pelo novo conteúdo[m
+[32m+[m[32m  //       document.getElementById('playerSelectBox').innerHTML = html;[m
+ [m
+[31m-    })[m
+[31m-    .catch(error => console.error('Erro ao atualizar selectbox:', error));[m
+[32m+[m[32m  //       console.log('Select box atualizado');[m
+[32m+[m
+[32m+[m[32m  //     })[m
+[32m+[m[32m  //     .catch(error => console.error('Erro ao atualizar selectbox:', error));[m
+[32m+[m[32m  // }[m
+[32m+[m
+[32m+[m[32m  const playerSelectBox = document.getElementById('playerSelectBox');[m
+[32m+[m
+[32m+[m[32m  // const playerSelectBox = document.getElementById('playerSelectBox');[m
+[32m+[m[32m  if (playerSelectBox) {[m
+[32m+[m[32m    playerSelectBox.innerHTML = html;[m
+[32m+[m[32m    console.log('Select box atualizado');[m
+[32m+[m[32m  } else {[m
+[32m+[m[32m    console.error('Elemento com ID "playerSelectBox" não encontrado.');[m
+[32m+[m[32m  }[m
+[32m+[m[32m  })[m
+[32m+[m[32m  .catch(error => console.error('Erro ao atualizar selectbox:', error));[m
+ }[m
+ [m
+ // function updatePillDisplay () {[m
+[1mdiff --git a/app/controllers/games_controller.rb b/app/controllers/games_controller.rb[m
+[1mindex 0334a1e..e141b66 100644[m
+[1m--- a/app/controllers/games_controller.rb[m
+[1m+++ b/app/controllers/games_controller.rb[m
+[36m@@ -1,4 +1,18 @@[m
+ class GamesController < ApplicationController[m
+[32m+[m
+[32m+[m[32m  before_action :set_temporary_chosen_players[m
+[32m+[m
+[32m+[m[32m  def set_temporary_chosen_players[m
+[32m+[m[32m    # @temporary_chosen_players_array = [1, 2, 3, 4][m
+[32m+[m
+[32m+[m[32m    @temporary_chosen_players_array = session[:temporary_chosen_players_array] || [][m
+[32m+[m
+[32m+[m[32m  end[m
+[32m+[m
+[32m+[m
+[32m+[m[32m####################################[m
+[32m+[m
+[32m+[m
+   def menu[m
+     # Game.first.destroy[m
+     @old_games = Game.where(game_is_over: true)[m
+[36m@@ -33,18 +47,7 @@[m [mclass GamesController < ApplicationController[m
+   end[m
+ [m
+ [m
+[31m-[m
+[31m-############################################[m
+[31m-[m
+[31m-  def rooster[m
+[31m-    # @rooster = Player_in_the_rooster.new[m
+[31m-  end[m
+[31m-[m
+[31m-  def add_player_in_the_rooster[m
+[31m-    # clicar e adcionar[m
+[31m-  end[m
+[31m-[m
+[31m-  private[m
+[32m+[m[32m  # private[m
+ [m
+   def game_params[m
+     params.require(:game).permit(:game_date, :game_time, :game_location_nickname, :game_map_address, :game_is_over)[m
+[36m@@ -54,137 +57,106 @@[m [mclass GamesController < ApplicationController[m
+     params.require(:officials_in_the_game).permit(:game_id, :official_position_id, :player_id, :is_shadowing)[m
+   end[m
+ [m
+[31m-end[m
+ [m
+ [m
+ #####################################[m
+ [m
+ #games_controller.rb[m
+ [m
+[31m-def officials_in_the_game[m
+[31m-[m
+[31m-  show[m
+[31m-  # @temporary_chosen_players_array = [][m
+[31m-  @temporary_chosen_players_array = [1, 2, 3][m
+[31m-[m
+[31m-[m
+[31m-  @players = Player.all[m
+[32m+[m[32m  def officials_in_the_game[m
+[32m+[m[32m    @game_show = Game.find(params[:game_id])[m
+ [m
+[31m-  @official_position = OfficialPosition.all[m
+[32m+[m[32m    @players = Player.all[m
+ [m
+[31m-  @officials_in_the_game = OfficialsInTheGame.where(game_id: @game_show.id)[m
+[32m+[m[32m    @official_position = OfficialPosition.all[m
+ [m
+[31m-  @officials_in_the_game = [] if @officials_in_the_game.empty?[m
+[32m+[m[32m    @officials_in_the_game = OfficialsInTheGame.where(game_id: @game_show.id)[m
+ [m
+[32m+[m[32m    @officials_in_the_game = [] if @officials_in_the_game.empty?[m
+ [m
+[31m-  temporary_chosen_players_array_update[m
+ [m
+[31m-  session_update[m
+[31m-[m
+[31m-end[m
+[32m+[m[32m  end[m
+ [m
+ [m
+ [m
+ [m
+ [m
+[31m-def create_officials_in_the_game[m
+[31m-  # o nome mais adequado para essa classe seria algo como create_or_update[m
+[31m-  # mudar o nome dessa classe aqui e onde precisar[m
+[32m+[m[32m  def create_officials_in_the_game[m
+[32m+[m[32m    # o nome mais adequado para essa classe seria algo como create_or_update[m
+[32m+[m[32m    # mudar o nome dessa classe aqui e onde precisar[m
+ [m
+[31m-  # Encontra ou inicializa um registro para o jogo e a posição oficial[m
+[31m-  @official = OfficialsInTheGame.find_or_initialize_by([m
+[31m-    game_id: officials_in_the_game_params[:game_id],[m
+[31m-    official_position_id: officials_in_the_game_params[:official_position_id][m
+[31m-    )[m
+[32m+[m[32m    # Encontra ou inicializa um registro para o jogo e a posição oficial[m
+[32m+[m[32m    @official = OfficialsInTheGame.find_or_initialize_by([m
+[32m+[m[32m      game_id: officials_in_the_game_params[:game_id],[m
+[32m+[m[32m      official_position_id: officials_in_the_game_params[:official_position_id][m
+[32m+[m[32m      )[m
+ [m
+[31m-    # Atualiza o registro com os parâmetros fornecidos[m
+[31m-    @official.assign_attributes(officials_in_the_game_params)[m
+[32m+[m[32m      # Atualiza o registro com os parâmetros fornecidos[m
+[32m+[m[32m      @official.assign_attributes(officials_in_the_game_params)[m
+ [m
+[31m-    if @official.save[m
+[31m-      flash.now[:notice] = "Equipe de arbitragem salva com sucesso!"[m
+[31m-      redirect_to game_path(@official.game_id)[m
+[31m-    else[m
+[31m-      flash.now[:alert] = "Não foi possível salvar a equipe de arbitragem."[m
+[31m-      render :officials_in_the_game[m
+[31m-    end[m
+[31m-end[m
+[32m+[m[32m      if @official.save[m
+[32m+[m[32m        flash.now[:notice] = "Equipe de arbitragem salva com sucesso!"[m
+[32m+[m[32m        redirect_to game_path(@official.game_id)[m
+[32m+[m[32m      else[m
+[32m+[m[32m        flash.now[:alert] = "Não foi possível salvar a equipe de arbitragem."[m
+[32m+[m[32m        render :officials_in_the_game[m
+[32m+[m[32m      end[m
+[32m+[m[32m  end[m
+ [m
+ [m
+   # private[m
+ [m
+   # Métodos auxiliares[m
+[31m-  def session_update[m
+[31m-    session[:chosen_players] = @temporary_chosen_players_array[m
+[31m-  end[m
+ [m
+[31m-  def temporary_chosen_players_array_update[m
+[31m-    @temporary_chosen_players_array = session[:chosen_players] || [1][m
+[31m-    @temporary_chosen_players_array = [1, 2, 3][m
+[31m-[m
+[31m-  end[m
+[31m-[m
+[31m-  def player_exists?(player_id)[m
+[31m-    @temporary_chosen_players_array.include?(player_id)[m
+[32m+[m[32m  def lista_filtrada[m
+[32m+[m[32m    #    @temporary_chosen_players_array = [1] if @temporary_chosen_players_array.nil?[m
+[32m+[m[32m    Player.all.reject { |player| @temporary_chosen_players_array.include?(player.id) }[m
+   end[m
+ [m
+[32m+[m[32m  def update_chosen_players[m
+[32m+[m[32m    chosen_player_id = params[:chosen_player_id][m
+ [m
+[31m-  # métodos de negócios[m
+[31m-  def manage_temporary_chosen_players_array[m
+[32m+[m[32m    Rails.logger.debug "ID da jogadora recebida: #{chosen_player_id}" # Adicione esta linha[m
+ [m
+[31m-    temporary_chosen_players_array_update[m
+[32m+[m[32m    add_chosen_player_to_temporary_array(chosen_player_id)[m
+ [m
+[31m-    session_update[m
+[32m+[m[32m    render json: { success: true }[m
+   end[m
+ [m
+[31m-  def add_player_to_temp_array(player_id)[m
+[31m-    return if player_exists?(player_id)[m
+[32m+[m[32m  def add_chosen_player_to_temporary_array(chosen_player_id)[m
+[32m+[m[32m    chosen_player_id = chosen_player_id.to_i[m
+ [m
+[31m-    @temporary_chosen_players_array << player_id[m
+[32m+[m[32m    return if player_exists?(chosen_player_id)[m
+ [m
+[31m-    session_update[m
+[31m-  end[m
+[31m-[m
+[31m-  def remove_player_from_temp_array(player)[m
+[31m-    return unless player_exists?(player)[m
+[32m+[m[32m    @temporary_chosen_players_array << chosen_player_id[m
+ [m
+[31m-    @temporary_chosen_players_array.delete(player)[m
+[32m+[m[32m    session[:temporary_chosen_players_array] = @temporary_chosen_players_array[m
+ [m
+[31m-    session_update[m
+   end[m
+ [m
+[32m+[m[32m  def remove_chosen_player_from_temporary_array(chosen_player_id)[m
+[32m+[m[32m    return unless player_exists?(chosen_player_id)[m
+ [m
+[31m-  def update_chosen_players[m
+[31m-    player_id = params[:chosen_player_id][m
+[31m-[m
+[31m-    add_player_to_temp_array(player_id)[m
+[32m+[m[32m    @temporary_chosen_players_array.delete(chosen_player_id)[m
+[32m+[m[32m    session[:temporary_chosen_players_array] = @temporary_chosen_players_array[m
+ [m
+[31m-    Rails.logger.debug "Array temporária após adicionar jogadora: #{@temporary_chosen_players_array.inspect}"[m
+[32m+[m[32m  end[m
+ [m
+[31m-    render json: { success: true }[m
+[32m+[m[32m  def player_exists?(player_id)[m
+[32m+[m[32m    @temporary_chosen_players_array.include?(player_id)[m
+   end[m
+ [m
+   def current_chosen_players[m
+ [m
+     chosen_players = @temporary_chosen_players_array || [][m
+ [m
+[31m-    Rails.logger.debug "Jogadoras escolhidas: #{chosen_players.inspect}"[m
+[32m+[m[32m    render json: { chosen_players: chosen_players }[m
+ [m
+[31m-    render json: { chosen_players: chosen_players}[m
+   end[m
+ [m
+   def refresh_selectbox[m
+[31m-    render partial: 'selectbox'[m
+[31m-  end[m
+[31m-[m
+[31m-  def chosen_players_array[m
+[31m-    @temporary_chosen_players_array || [][m
+[32m+[m[32m    render partial: 'shared/selectbox', locals: { lista_filtrada: lista_filtrada }[m
+[32m+[m[32m    # render plain: "carregado"[m
+   end[m
+ [m
+[31m-  def lista_filtrada[m
+[31m-   # @temporary_chosen_players_array = [1, 2, 3][m
+[31m-[m
+[31m-   @temporary_chosen_players_array = [1] if @temporary_chosen_players_array.nil?[m
+[31m-[m
+[31m-[m
+[31m-    Player.all.reject { |player| @temporary_chosen_players_array.include?(player.id)}[m
+[31m-  end[m
+[32m+[m[32mend[m
+[1mdiff --git a/app/controllers/officials_in_the_game_controller.rb b/app/controllers/officials_in_the_game_controller.rb[m
+[1mnew file mode 100644[m
+[1mindex 0000000..162e2a8[m
+[1m--- /dev/null[m
+[1m+++ b/app/controllers/officials_in_the_game_controller.rb[m
+[36m@@ -0,0 +1,52 @@[m
+[32m+[m[32mclass OfficialsInTheGameController < ApplicationController[m
+[32m+[m
+[32m+[m[32m  before_action :set_temporary_chosen_players_array[m
+[32m+[m
+[32m+[m[32m  def set_temporary_chosen_players_array[m
+[32m+[m[32m    @temporary_chosen_players_array = [1, 2, 3][m
+[32m+[m[32m  end[m
+[32m+[m
+[32m+[m
+[32m+[m[32m  def lista_filtrada[m
+[32m+[m[32m    #    @temporary_chosen_players_array = [1] if @temporary_chosen_players_array.nil?[m
+[32m+[m
+[32m+[m[32m    Player.all.reject { |player| @temporary_chosen_players_array.include?(player.id) }[m
+[32m+[m[32m  end[m
+[32m+[m
+[32m+[m[32m  def update_chosen_players[m
+[32m+[m[32m    chosen_player_id = params[:chosen_player_id][m
+[32m+[m
+[32m+[m[32m    add_chosen_player_to_temporary_array(chosen_player_id)[m
+[32m+[m
+[32m+[m[32m    render json: { success: true }[m
+[32m+[m[32m  end[m
+[32m+[m
+[32m+[m[32m  def add_chosen_player_to_temporary_array(chosen_player_id)[m
+[32m+[m[32m    return if player_exists?(chosen_player_id)[m
+[32m+[m
+[32m+[m[32m    @temporary_chosen_players_array << chosen_player_id[m
+[32m+[m
+[32m+[m[32m  end[m
+[32m+[m
+[32m+[m[32m  def remove_chosen_player_from_temporary_array(chosen_player_id)[m
+[32m+[m[32m    return unless player_exists?(chosen_player_id)[m
+[32m+[m
+[32m+[m[32m    @temporary_chosen_players_array.delete(chosen_player_id)[m
+[32m+[m
+[32m+[m[32m  end[m
+[32m+[m
+[32m+[m[32m  def player_exists?(player_id)[m
+[32m+[m[32m    @temporary_chosen_players_array.include?(player_id)[m
+[32m+[m[32m  end[m
+[32m+[m
+[32m+[m[32m  def current_chosen_players[m
+[32m+[m
+[32m+[m[32m    chosen_players = @temporary_chosen_players_array || [][m
+[32m+[m
+[32m+[m[32m    render json: { chosen_players: chosen_players }[m
+[32m+[m
+[32m+[m[32m  end[m
+[32m+[m
+[32m+[m[32m  def refresh_selectbox[m
+[32m+[m[32m    render partial: 'selectbox'[m
+[32m+[m[32m  end[m
+[1mdiff --git a/app/views/games/officials_in_the_game.html.erb b/app/views/games/officials_in_the_game.html.erb[m
+[1mindex f266c03..c5d54ac 100644[m
+[1m--- a/app/views/games/officials_in_the_game.html.erb[m
+[1m+++ b/app/views/games/officials_in_the_game.html.erb[m
+[36m@@ -1,18 +1,7 @@[m
+[31m-<%# officials_in_the_game.html.erb %>[m
+[31m-[m
+[31m-<head>[m
+[31m-[m
+[31m-  <%= javascript_include_tag 'officials_in_the_game', 'data-turbolinks-track': 'reload'  %>[m
+[31m-[m
+[31m-</head>[m
+[31m-[m
+ [m
+ <%= render 'shared/selectbox' %>[m
+ [m
+[31m-[m
+[31m-[m
+ <div id="array-display"></div>[m
+ [m
+[31m-<%= puts @temporary_chosen_players_array %>[m
+[31m-##[m
+[31m-<%= lista_filtrada.first.calling_name %>[m
+[32m+[m[32m<%= @temporary_chosen_players_array.inspect %>[m
+[41m+[m
+[1mdiff --git a/app/views/layouts/application.html.erb b/app/views/layouts/application.html.erb[m
+[1mindex 88dbdc5..b50c4df 100644[m
+[1m--- a/app/views/layouts/application.html.erb[m
+[1m+++ b/app/views/layouts/application.html.erb[m
+[36m@@ -6,7 +6,7 @@[m
+     <%= csrf_meta_tags %>[m
+     <%= csp_meta_tag %>[m
+     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>[m
+[31m-[m
+[32m+[m[32m    <%= javascript_include_tag 'officials_in_the_game'  %>[m
+ [m
+ [m
+     <%# Tudo esse código é pra fazer funcionar o Simple Form For %>[m
+[36m@@ -32,13 +32,13 @@[m
+ [m
+ [m
+   <body>[m
+[31m-   <%#  <p class="notice"><%= notice %></p>[m
+[32m+[m[32m   <%#  <p class="notice"><%= notice </p>[m
+     <p class="alert"><%= alert %></p>[m
+     <%= render "shared/flashes" %>[m
+     <div class="fixed-nav">[m
+       <%= render "shared/navbar" %>[m
+     </div>[m
+[31m-    <div class="body-nav">[m
+[32m+[m[32m    <div class="body-nav" data-controller="hello">[m
+       <%= yield %>[m
+     </div>[m
+   </body>[m
+[1mdiff --git a/app/views/shared/_selectbox.html.erb b/app/views/shared/_selectbox.html.erb[m
+[1mindex 50ddfc5..056c11f 100644[m
+[1m--- a/app/views/shared/_selectbox.html.erb[m
+[1m+++ b/app/views/shared/_selectbox.html.erb[m
+[36m@@ -8,7 +8,7 @@[m
+               value_method: :id,[m
+               include_blank: "digite",[m
+               input_html: { id: 'playerSelectBox',[m
+[31m-                            onchange: 'addPlayer({ id: this.value })' } %>[m
+[32m+[m[32m                            onchange: 'addPlayer(this.value)' } %>[m
+                         <%# onchange: 'addPlayer({ id: this.value, calling_name: this.options[this.selectedIndex].text })' } %>[m
+ [m
+ [m
+[1mdiff --git a/test/controllers/officials_in_the_game_controller_test.rb b/test/controllers/officials_in_the_game_controller_test.rb[m
+[1mnew file mode 100644[m
+[1mindex 0000000..6c6a3b8[m
+[1m--- /dev/null[m
+[1m+++ b/test/controllers/officials_in_the_game_controller_test.rb[m
+[36m@@ -0,0 +1,7 @@[m
+[32m+[m[32mrequire "test_helper"[m
+[32m+[m
+[32m+[m[32mclass OfficialsInTheGameControllerTest < ActionDispatch::IntegrationTest[m
+[32m+[m[32m  # test "the truth" do[m
+[32m+[m[32m  #   assert true[m
+[32m+[m[32m  # end[m
+[32m+[m[32mend[m
