@@ -1,18 +1,7 @@
-<%# officials_in_the_game.html.erb %>
-
-<head>
-
-  <%= javascript_include_tag 'officials_in_the_game', 'data-turbolinks-track': 'reload'  %>
-
-</head>
-
 
 <%= render 'shared/selectbox' %>
 
-
-
 <div id="array-display"></div>
 
-<%= puts @temporary_chosen_players_array %>
-##
-<%= lista_filtrada.first.calling_name %>
+<%= @temporary_chosen_players_array.inspect %>
+

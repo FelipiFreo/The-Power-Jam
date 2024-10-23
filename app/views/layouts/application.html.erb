@@ -6,7 +6,7 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-
+    <%= javascript_include_tag 'officials_in_the_game'  %>
 
 
     <%# Tudo esse código é pra fazer funcionar o Simple Form For %>
@@ -32,13 +32,13 @@
 
 
   <body>
-   <%#  <p class="notice"><%= notice %></p>
+   <%#  <p class="notice"><%= notice </p>
     <p class="alert"><%= alert %></p>
     <%= render "shared/flashes" %>
     <div class="fixed-nav">
       <%= render "shared/navbar" %>
     </div>
-    <div class="body-nav">
+    <div class="body-nav" data-controller="hello">
       <%= yield %>
     </div>
   </body>
