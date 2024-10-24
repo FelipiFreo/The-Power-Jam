@@ -5,6 +5,8 @@ class OfficialsInTheGameController < ApplicationController
   def set_temporary_chosen_players_array
     # @temporary_chosen_players_array = [1, 2, 3, 4]
 
+    # session[:temporary_chosen_players_array] = []
+
     @temporary_chosen_players_array = session[:temporary_chosen_players_array] || []
 
   end
@@ -22,6 +24,17 @@ class OfficialsInTheGameController < ApplicationController
 
     # parece que não rpecisa da linha abaixo porque a consulta acima já faz isso
     # @officials_in_the_game = [] if @officials_in_the_game.empty?
+
+    @lista_filtrada = lista_filtrada
+
+    @jogadoras_selecionadas = Player.where(id: @temporary_chosen_players_array) || []
+
+      # # Outros códigos...
+      # logger.debug "Temporary Chosen Players Array: #{@temporary_chosen_players_array.inspect}"
+      # @filtered_players = lista_filtrada
+      # logger.debug "Filtered Players: #{@filtered_players.inspect}"
+      # # Outros códigos...
+
 
 
   end
@@ -49,8 +62,6 @@ class OfficialsInTheGameController < ApplicationController
   end
 
   #######################################
-
-
 
 
 
@@ -91,18 +102,16 @@ class OfficialsInTheGameController < ApplicationController
 
   def current_chosen_players
 
-    chosen_players = @temporary_chosen_players_array || []
+    # chosen_players = @temporary_chosen_players_array || []
+    chosen_players = Player.where(id: @temporary_chosen_players_array).select(:callign_name, :derby_number)
 
     render json: { chosen_players: chosen_players }
 
   end
 
-  def refresh_selectbox_XXX
-    render partial: 'selectbox'
-  end
 
   def refresh_selectbox
-    render partial: 'shared/selectbox', locals: { lista_filtrada: lista_filtrada }
+    render partial: 'shared/selectbox' #, locals: { lista_filtrada: lista_filtrada }
     # render plain: "carregado"
   end
 

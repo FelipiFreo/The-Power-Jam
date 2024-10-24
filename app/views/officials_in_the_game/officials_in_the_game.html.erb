@@ -1,11 +1,30 @@
+<%# app/views/officials_in_the_game/officials_in_the_game.html.erb %>
 <head>
 
     <%= javascript_include_tag 'officials_in_the_game'  %>
 
 </head>
 
-<%= render 'shared/selectbox', lista_filtrada: @lista_filtrada %>
+<%= render 'shared/selectbox' %>
+<%# <%= render 'shared/selectbox', locals: { lista_filtrada: @lista_filtrada } %>
+
+
 
 <div id="array-display"></div>
 
-<%= @temporary_chosen_players_array.inspect %>
+<p>Nome da primeira jogadora da lista:<br> <%= @lista_filtrada.first.calling_name %></p>
+
+<p>@temporary_chosen_players_array.inspect: <%= @temporary_chosen_players_array.inspect %></p>
+
+
+#########################<br><br>
+
+<p>
+  @jogadoras_selecionadas.each<br>
+  #{jogadora_selecionada.calling_name} ##{jogadora_selecionada.derby_number}:<br>
+  <% @jogadoras_selecionadas.each do |jogadora_selecionada| %>
+    <div>
+      <%= "#{jogadora_selecionada.calling_name} ##{jogadora_selecionada.derby_number}" %>
+    </div>
+  <% end %>
+</p>

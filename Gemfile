@@ -57,6 +57,9 @@ gem 'colorize', '~> 0.8.1'
 
 gem 'hirb'
 
+gem 'rake', '13.2.1'
+
+
 
 group :development, :test do
   gem "dotenv-rails"

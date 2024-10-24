@@ -4,6 +4,9 @@ console.log("Testando o arquivo officials_in_the_game.js");
 
 // Ouça o evento 'turbolinks:load' para garantir que o DOM esteja pronto
 document.addEventListener('turbolinks:load', function() {
+
+  console.log('Evento turbolinks:load acionado');
+
   // Verifica se o selectBox está no DOM
   const selectBox = document.getElementById('playerSelectBox');
 
@@ -17,7 +20,7 @@ document.addEventListener('turbolinks:load', function() {
 
 function addPlayer(chosenPlayer) {
 
-  console.log("ID da jogadora selecionada:", chosenPlayer); // Adicione esta linha
+  console.log("Função addPlayer - ID da jogadora selecionada:", chosenPlayer); // Adicione esta linha
 
   const selectBox = document.getElementById('playerSelectBox');
 
@@ -27,25 +30,30 @@ function addPlayer(chosenPlayer) {
     console.error('Elemento selectBox não encontrado');
   }
 
+  console.log("Função addPlayer - Chamou o fetch /update_chosen_players");
   // Envia o ID da jogadora selecionada para o Ruby
-  fetch('http://localhost:3000/update_chosen_players', {
+  fetch('/update_chosen_players', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
     },
 
+
     // Enviando apenas o ID da jogadora selecionada
     body: JSON.stringify({ chosen_player_id: chosenPlayer })
+
   })
   .then(response => response.json())
   .then(response => {
     if (response.success) {
 
-      console.log('Função chamadax');
+      console.log("Função addPlayer - Resposta com sucesso:");
 
       updateTemporaryChosenPlayersDisplay();
       refreshSelectbox();
+
+      console.log("Função addPlayer - chamou update e refresh");
 
       } else {
       console.error('Falha ao adicionar jogadora:', response.message);
@@ -56,18 +64,23 @@ function addPlayer(chosenPlayer) {
 
 function updateTemporaryChosenPlayersDisplay() {
 
-  console.log('Função chamada');
+  console.log('Função chamada - updateTemporaryChosenPlayersDisplay');
 
   fetch('/current_chosen_players')
     .then(response => response.json())
     .then(data => {
 
-      console.log('Dados recebidos:', data.chosen_players);
+      console.log('Dados recebidos: chosen_players = @temporary_chosen_players_array', data.chosen_players);
 
       const displayElement = document.getElementById('array-display');
       if (displayElement) {
         // Acessar apenas os IDs e atualizá-los no array-display
-        const playerIds = data.chosen_players.map(player => player.id).join(', ');
+        // const playerIds = data.chosen_players.map(player => player.id).join(', ');
+        const playerDetails = data.chosen_players.map(player => `${player.calling_name} #${player.derby_number}`).join(', ');
+
+
+        //const playerIds = data.chosen_players.join(', ');
+
         displayElement.textContent = playerIds;
 
         console.log('Atualizando array-display com:', playerIds);
@@ -79,32 +92,25 @@ function updateTemporaryChosenPlayersDisplay() {
 }
 
 function refreshSelectbox() {
-  let html;
+
+  console.log('Função chamada - refreshSelectbox');
+
 
   // Faz uma requisição AJAX para o controlador que renderiza a select box
   fetch('/refresh_selectbox')
     .then(response => response.text())
-    .then(data => {
-      html = data
+    .then(html => {
 
-  //       // Substitui a select box existente pelo novo conteúdo
-  //       document.getElementById('playerSelectBox').innerHTML = html;
+      console.log("Função refresh_selectbox - Resposta com sucesso:", html);
 
-  //       console.log('Select box atualizado');
+      const playerSelectBox = document.getElementById('playerSelectBox');
 
-  //     })
-  //     .catch(error => console.error('Erro ao atualizar selectbox:', error));
-  // }
-
-  const playerSelectBox = document.getElementById('playerSelectBox');
-
-  // const playerSelectBox = document.getElementById('playerSelectBox');
-  if (playerSelectBox) {
-    playerSelectBox.innerHTML = html;
-    console.log('Select box atualizado');
-  } else {
-    console.error('Elemento com ID "playerSelectBox" não encontrado.');
-  }
+      if (playerSelectBox) {
+        playerSelectBox.innerHTML = html;
+        console.log('Função refresh_selectbox - Select box atualizado');
+      } else {
+        console.error('Elemento com ID "playerSelectBox" não encontrado.');
+      }
   })
   .catch(error => console.error('Erro ao atualizar selectbox:', error));
 }
