@@ -1,0 +1,34 @@
+// _pills.scss
+
+#pill-container-display {
+  border: 2px solid #9da267;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px; /* Espaçamento entre as pills */
+  padding: 4px;
+}
+
+.pill {
+  background-color: #343434;
+  color: #f4f4f4;
+  border-radius: 16px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+
+}
+
+.x-remove-pill-button {
+  background-color: #b0b0b0;
+  border: none;
+  border-radius: 50%;
+  color: #f4f4f4;
+  margin-left: 8px;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.x-remove-pill-button:hover {
+  background-color: #f4f4f4;
+  color: #343434;
+}

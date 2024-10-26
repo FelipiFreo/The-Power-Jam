@@ -3,7 +3,6 @@ class OfficialsInTheGameController < ApplicationController
   before_action :set_temporary_chosen_players_array
 
   def set_temporary_chosen_players_array
-    # @temporary_chosen_players_array = [1, 2, 3, 4]
 
     # session[:temporary_chosen_players_array] = []
 
@@ -22,20 +21,9 @@ class OfficialsInTheGameController < ApplicationController
 
     @officials_in_the_game = OfficialsInTheGame.where(game_id: @game_show.id)
 
-    # parece que não rpecisa da linha abaixo porque a consulta acima já faz isso
-    # @officials_in_the_game = [] if @officials_in_the_game.empty?
-
     @lista_filtrada = lista_filtrada
 
     @jogadoras_selecionadas = Player.where(id: @temporary_chosen_players_array) || []
-
-      # # Outros códigos...
-      # logger.debug "Temporary Chosen Players Array: #{@temporary_chosen_players_array.inspect}"
-      # @filtered_players = lista_filtrada
-      # logger.debug "Filtered Players: #{@filtered_players.inspect}"
-      # # Outros códigos...
-
-
 
   end
 
@@ -71,7 +59,7 @@ class OfficialsInTheGameController < ApplicationController
   end
 
   def update_chosen_players
-    chosen_player_id = params[:chosen_player_id]
+    chosen_player_id = params[:chosen_player_id].to_i
 
     Rails.logger.debug "ID da jogadora recebida: #{chosen_player_id}" # Adicione esta linha
 
@@ -82,7 +70,7 @@ class OfficialsInTheGameController < ApplicationController
   end
 
   def add_chosen_player_to_temporary_array(chosen_player_id)
-    chosen_player_id = chosen_player_id.to_i
+    # chosen_player_id = chosen_player_id.to_i
     return if player_exists?(chosen_player_id)
 
     @temporary_chosen_players_array << chosen_player_id
@@ -102,17 +90,33 @@ class OfficialsInTheGameController < ApplicationController
 
   def current_chosen_players
 
-    # chosen_players = @temporary_chosen_players_array || []
-    chosen_players = Player.where(id: @temporary_chosen_players_array).select(:callign_name, :derby_number)
+    @jogadoras_selecionadas = Player.where(id: @temporary_chosen_players_array) #.select(:calling_name, :derby_number)
 
-    render json: { chosen_players: chosen_players }
+    render partial: 'shared/pill_container_display', layout: false #, locals: { jogadoras_selecionadas: @jogadoras_selecionadas }
+
 
   end
 
+  def update_pill_display
+
+
+
+  end
 
   def refresh_selectbox
     render partial: 'shared/selectbox' #, locals: { lista_filtrada: lista_filtrada }
     # render plain: "carregado"
+  end
+
+
+
+
+  def remove_chosen_player_from_temporary_array
+
+    player_to_be_deleted = params[:player_id].to_i
+    @temporary_chosen_players_array.delete(player_to_be_deleted)
+    head :ok
+
   end
 
 

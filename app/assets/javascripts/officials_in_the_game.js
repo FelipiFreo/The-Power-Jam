@@ -48,12 +48,12 @@ function addPlayer(chosenPlayer) {
   .then(response => {
     if (response.success) {
 
-      console.log("Função addPlayer - Resposta com sucesso:");
+      console.log("Função addPlayer - Respondeu com sucesso");
+      console.log("Função addPlayer - chamará update e refresh");
 
-      updateTemporaryChosenPlayersDisplay();
       refreshSelectbox();
+      updatePillDisplay();
 
-      console.log("Função addPlayer - chamou update e refresh");
 
       } else {
       console.error('Falha ao adicionar jogadora:', response.message);
@@ -62,34 +62,6 @@ function addPlayer(chosenPlayer) {
   .catch(error => console.error('Erro ao adicionar jogadora:', error));
 }
 
-function updateTemporaryChosenPlayersDisplay() {
-
-  console.log('Função chamada - updateTemporaryChosenPlayersDisplay');
-
-  fetch('/current_chosen_players')
-    .then(response => response.json())
-    .then(data => {
-
-      console.log('Dados recebidos: chosen_players = @temporary_chosen_players_array', data.chosen_players);
-
-      const displayElement = document.getElementById('array-display');
-      if (displayElement) {
-        // Acessar apenas os IDs e atualizá-los no array-display
-        // const playerIds = data.chosen_players.map(player => player.id).join(', ');
-        const playerDetails = data.chosen_players.map(player => `${player.calling_name} #${player.derby_number}`).join(', ');
-
-
-        //const playerIds = data.chosen_players.join(', ');
-
-        displayElement.textContent = playerIds;
-
-        console.log('Atualizando array-display com:', playerIds);
-      } else {
-        console.error('Elemento #array-display não encontrado no DOM');
-      }
-    })
-    .catch(error => console.error('Erro ao buscar jogadoras escolhidas:', error));
-}
 
 function refreshSelectbox() {
 
@@ -98,22 +70,80 @@ function refreshSelectbox() {
 
   // Faz uma requisição AJAX para o controlador que renderiza a select box
   fetch('/refresh_selectbox')
-    .then(response => response.text())
-    .then(html => {
+  .then(response => response.text())
+  .then(html => {
 
-      console.log("Função refresh_selectbox - Resposta com sucesso:", html);
+    console.log("Função refresh_selectbox - Respondeu com sucesso");
 
-      const playerSelectBox = document.getElementById('playerSelectBox');
+    const playerSelectBox = document.getElementById('playerSelectBox');
 
-      if (playerSelectBox) {
+    if (playerSelectBox) {
         playerSelectBox.innerHTML = html;
-        console.log('Função refresh_selectbox - Select box atualizado');
+        console.log('Função refreshSelectbox() - Select box refreshado');
       } else {
         console.error('Elemento com ID "playerSelectBox" não encontrado.');
       }
   })
   .catch(error => console.error('Erro ao atualizar selectbox:', error));
 }
+
+
+function updatePillDisplay() {
+
+  console.log('Função chamada - updatePillDisplay');
+
+  fetch('/current_chosen_players')
+    .then(response => response.text())
+    .then(html => {
+
+      console.log('Dados recebidos: chosen_players = Player.where(id: @temporary_chosen_players_array).select(:id, :calling_name, :derby_number)', html.chosen_players);
+
+
+      const pillDisplay = document.getElementById('pill-container-display');
+
+      if (pillDisplay) {
+        pillDisplay.innerHTML = html;
+        console.log('Função updatePillDisplay() - Select box atualizado');
+      } else {
+        console.error('Elemento com ID "pillDisplay" não encontrado.');
+      }
+
+
+
+    })
+    .catch(error => console.error('Erro ao buscar jogadoras escolhidas:', error));
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // function updatePillDisplay () {
 //   let pillContainer = document.getElementById('pill-container');
@@ -126,3 +156,53 @@ function refreshSelectbox() {
 
 //     pillContainer.appendChild(pill);
 //   });
+
+function updatePillDisplayxxx (chosenPlayer) {
+
+  console.log('Função chamada - updatePillDisplay');
+
+  const playerPill = document.createElement('span');
+  playerPill.className = 'pill';
+  playerPill.textContent = chosenPlayer;
+
+  const xRemovePillButton = document.createElement('button');
+  xRemovePillButton.className = 'remove-pill';
+  xRemovePillButton.textContent = '×';
+  xRemovePillButton.onclick = function() {
+    pillContainer.removeChild(playerPill);
+  };
+
+  playerPill.appendChild(xRemovePillButton);
+  pillContainer.appendChild(playerPill);
+
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  const pillContainer = document.getElementById("pill-container");
+
+  // Função para renderizar uma nova pill
+  function addPill(player) {
+    const pill = document.createElement("div");
+    pill.classList.add("pill");
+    pill.dataset.playerId = player.id;
+    pill.innerHTML = `<span>${player.name}</span><button class="remove-pill" data-player-id="${player.id}">X</button>`;
+
+    // Event listener para remover pill ao clicar no "X"
+    pill.querySelector(".remove-pill").addEventListener("click", () => removePill(player.id));
+
+    pillContainer.appendChild(pill);
+  }
+
+  // Função para remover a pill
+  function removePill(playerId) {
+    const pill = pillContainer.querySelector(`[data-player-id="${playerId}"]`);
+    if (pill) {
+      pill.remove();
+      // Aqui você remove a jogadora do array no backend, por exemplo, enviando uma requisição AJAX
+    }
+  }
+
+  // Renderizar as pills iniciais
+  const initialPlayers = JSON.parse('<%= @temporary_chosen_player_array_display.to_json %>');
+  initialPlayers.forEach(player => addPill(player));
+});

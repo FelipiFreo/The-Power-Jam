@@ -27,7 +27,7 @@ Rails.application.routes.draw do
 
   get "games/new_game", to: "games#new_game"
   post "games/create_game", to: "games#create_game", as: "create_game"
-  
+
   get "games/:id", to: "games#show", as: :game
 
 
@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   post 'update_chosen_players', to: 'officials_in_the_game#update_chosen_players'
   get 'current_chosen_players', to: 'officials_in_the_game#current_chosen_players'
   get 'refresh_selectbox', to: 'officials_in_the_game#refresh_selectbox'
+  post 'remove_chosen_player_from_temporary_array', to: 'officials_in_the_game#remove_chosen_player_from_temporary_array'
 
 
 

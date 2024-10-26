@@ -1,0 +1,10 @@
+<%# _pill_container_display.html.erb %>
+
+  <div id="pill-container-display">
+    <% @jogadoras_selecionadas.each do |jogadora_selecionada| %>
+      <span class="pill">
+        <%= "#{jogadora_selecionada.calling_name} ##{jogadora_selecionada.derby_number}" %>
+        <button class="x-remove-pill-button">x</button>
+      </span>
+    <% end %>
+  </div>
