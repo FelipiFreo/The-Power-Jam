@@ -1,10 +1,22 @@
 <%# app/views/officials_in_the_game/officials_in_the_game.html.erb %>
 <head>
-
     <%= javascript_include_tag 'officials_in_the_game'  %>
-
+    <%= stylesheet_link_tag 'application', media: 'all' %>
 </head>
 
-<%= render 'shared/selectbox' %>
+<body>
 
-<%= render 'shared/pill_container_display' %>
+  <div class="mobile_view_container">
+<!-- Adicionando uma imagem de fundo ao cabeçalho -->
+
+    <div class="header-image"></div> <!-- Contêiner com a imagem de fundo -->
+
+
+
+    <div class="content">
+        <%= render 'shared/selectbox' %>
+        <%= render 'shared/pill_container_display' %>
+    </div>
+
+
+</body>

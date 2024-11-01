@@ -4,31 +4,54 @@
   border: 2px solid #9da267;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px; /* Espaçamento entre as pills */
+  gap: 4px; /* Espaçamento entre as pills */
   padding: 4px;
 }
 
 .pill {
-  background-color: #343434;
-  color: #f4f4f4;
-  border-radius: 16px;
-  padding: 4px;
+  font-size: 12px;
+  font-family: 'Readex Pro', sans-serif;
+  padding: 0.5em 1em;
+  margin: 0.25em;
+  border-radius: 24px;
+  border-color: #42002c;
+  color: #42002c;
+  background-color: #fbe0f2;
+  border: 1px solid #42002c;
+  outline: none;
+  cursor: pointer;
+
   display: flex;
   align-items: center;
 
 }
 
+.pill:not(.pill--selected):hover {
+  background-color: #20390e;
+  color: #343434;
+}
+
+.pill--selected {
+  background-color: #e0fafb;
+  color: #044755;
+  border: 1px solid #044755;
+  border-color: #044755;
+}
+
 .x-remove-pill-button {
-  background-color: #b0b0b0;
+  font-size: 12px;
+  font-family: 'Readex Pro', sans-serif;
+  padding: 0.5em;
+  margin: 0.25em;
+  border-radius: 1em;
   border: none;
-  border-radius: 50%;
+  outline: none;
+  background-color: #a71e1e;
   color: #f4f4f4;
-  margin-left: 8px;
-  padding: 4px;
   cursor: pointer;
 }
 
 .x-remove-pill-button:hover {
-  background-color: #f4f4f4;
+  background-color: #482a2a;
   color: #343434;
 }

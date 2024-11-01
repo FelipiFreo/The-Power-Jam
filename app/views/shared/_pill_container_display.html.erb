@@ -2,7 +2,7 @@
 
   <div id="pill-container-display">
     <% @jogadoras_selecionadas.each do |jogadora_selecionada| %>
-      <span class="pill">
+      <span class="pill pill--selected" type="button">
         <%= "#{jogadora_selecionada.calling_name} ##{jogadora_selecionada.derby_number}" %>
         <button class="x-remove-pill-button">x</button>
       </span>

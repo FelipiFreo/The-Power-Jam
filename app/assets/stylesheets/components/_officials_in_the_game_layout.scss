@@ -1,0 +1,46 @@
+.header-image {
+  background-color: #0f0f0f;
+  background-image: image-url('Rooster_Cortado.jpg');
+  background-size: contain;
+  background-position: center top;
+  background-repeat: no-repeat;
+  height: 100%;
+  width: 100%;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -2;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* camada preta com 50% de opacidade */
+    z-index: -1; /* deve ser maior que o z-index da imagem */
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 250px;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* camada preta com 50% de opacidade */
+    z-index: -1; /* deve ser maior que o z-index da imagem */
+  }
+}
+
+.selectbox {
+  align-items: center;
+  width: 60%;
+  border: 2px solid white;
+  border-radius: 0;
+  background-color: transparent;
+  box-shadow: none;
+  appearance: none;
+}

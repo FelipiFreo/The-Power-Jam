@@ -1,0 +1,7 @@
+.mobile_view_container {
+  width: 375px;
+  min-height: calc(100vh - 90px);
+  border: 1px solid #ccc;
+  overflow-x: hidden;
+  position: relative;
+}
